@@ -260,6 +260,7 @@
         },
         {
           "__type": "Player",
+          "cameraSensetivity": 1,
           "groundFriction": 9,
           "playerBody": {
             "_type": "gameobject",
@@ -375,6 +376,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-23T20:24:40.6015223\u002B02:00",
+  "LastSaved": "2024-02-23T20:55:49.6787832\u002B02:00",
   "__references": []
 }
