@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "4aa269b2-1e61-4046-b4b4-dcd63e4e03c0",
+    "Id": "7dccf3d2-d283-4ba4-b0df-b2a3c1b6fcb0",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
@@ -19,21 +19,22 @@
         "__type": "Player",
         "airFriction": 0.3,
         "cameraSensetivity": 0.1,
+        "crouchHeight": 40,
         "groundFriction": 9,
         "jumpForce": 300,
         "playerBody": {
           "_type": "gameobject",
-          "go": "2eb4ce05-0b0e-4664-87b0-d1185a47528c"
+          "go": "081b3932-94b1-4469-80e0-6fb85043327b"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "5cc58a2b-4377-4444-b053-6b5f53e26ba1",
+          "go": "fe006ddf-636a-45cd-bc44-3703c5ba6cbd",
           "component_type": "CameraComponent"
         },
         "playerCrouchSpeed": 100,
         "playerHead": {
           "_type": "gameobject",
-          "go": "c79d16ca-ca09-4c53-aec9-17cc68dbecc4"
+          "go": "df853a9e-8f85-4311-a30e-a2eb8ec0330e"
         },
         "playerRunSpeed": 250,
         "playerWalkSpeed": 150
@@ -53,20 +54,20 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "2eb4ce05-0b0e-4664-87b0-d1185a47528c",
+          "go": "081b3932-94b1-4469-80e0-6fb85043327b",
           "component_type": "SkinnedModelRenderer"
         }
       }
     ],
     "Children": [
       {
-        "Id": "c79d16ca-ca09-4c53-aec9-17cc68dbecc4",
+        "Id": "df853a9e-8f85-4311-a30e-a2eb8ec0330e",
         "Name": "PlayerHead",
         "Position": "0,0,63",
         "Enabled": true,
         "Children": [
           {
-            "Id": "5cc58a2b-4377-4444-b053-6b5f53e26ba1",
+            "Id": "fe006ddf-636a-45cd-bc44-3703c5ba6cbd",
             "Name": "Camera",
             "Position": "0,0,0",
             "Tags": "maincamera",
@@ -93,7 +94,7 @@
         ]
       },
       {
-        "Id": "2eb4ce05-0b0e-4664-87b0-d1185a47528c",
+        "Id": "081b3932-94b1-4469-80e0-6fb85043327b",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [

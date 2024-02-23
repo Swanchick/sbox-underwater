@@ -16,13 +16,16 @@ public sealed class Player : Component
 	[Property] public float playerWalkSpeed = 250f;
 	[Property] public float playerRunSpeed = 500f;
 	[Property] public float playerCrouchSpeed = 200f;
+	[Property] public float crouchSpeed = 20f;
 
-	[Property] public float groundFriction = 9f;
+	[Property] public float runFriction = 5f;
+	[Property] public float crouchFriction = 3f;
 	[Property] public float airFriction = 0.3f;
 	[Property] public float jumpForce = 300f;
 
 	// Camera rotation properties
 	[Property] public float cameraSensetivity = 5f;
+	[Property] public float crouchHeight = 40f;
 
 	[Property] public CameraComponent playerCamera;
 	[Property] public GameObject playerHead;
@@ -34,12 +37,15 @@ public sealed class Player : Component
 	private CitizenAnimationHelper animationHelper { get; set; }
 
 	private float sceneGravity;
+	private float defaultPlayerHeadHeight;
+	private float defaultPlayerHeight;
 
 	[Sync] public Rotation bodyRotation { get; set; }
 	[Sync] public Vector3 wishDir { get; set; }
 	[Sync] public PlayerStates playerStates { get; set; }
 
 	[Sync] public float currentSpeed { get; set; }
+	[Sync] public float currentFriction { get; set; }
 	[Sync] public CitizenAnimationHelper.MoveStyles currentMoveStyle { get; set; }
 
 	protected override void OnStart()
@@ -48,6 +54,9 @@ public sealed class Player : Component
 		animationHelper = Components.Get<CitizenAnimationHelper>();
 
 		playerBody.Enabled = IsProxy;
+
+		defaultPlayerHeadHeight = playerHead.Transform.LocalPosition.z;
+		defaultPlayerHeight = playerController.Height;
 
 		// If the player is not yours, delete the camera
 		if ( IsProxy )
@@ -58,6 +67,7 @@ public sealed class Player : Component
 		}
 		
 		sceneGravity = Scene.PhysicsWorld.Gravity.z;
+		
 	}
 
 	protected override void OnUpdate()
@@ -77,18 +87,68 @@ public sealed class Player : Component
 		if ( IsProxy )
 			return;
 		
-		if ( Input.Down( "Run" ) )
+		if ( Input.Down( "Run" ) && playerStates != PlayerStates.Crouch )
 		{
-			playerStates = PlayerStates.Run;
-			currentSpeed = playerRunSpeed;
-			currentMoveStyle = CitizenAnimationHelper.MoveStyles.Run;
+			SetRun();
 		} 
+		else if ( Input.Down( "Duck" ) || CanUncrouch() )
+		{
+			SetCrouch();
+		}
 		else
 		{
-			playerStates = PlayerStates.Walk;
-			currentSpeed = playerWalkSpeed;
-			currentMoveStyle = CitizenAnimationHelper.MoveStyles.Walk;
+			SetWalk();
 		}
+	}
+
+	private void SetRun()
+	{
+		playerStates = PlayerStates.Run;
+		currentSpeed = playerRunSpeed;
+		currentMoveStyle = CitizenAnimationHelper.MoveStyles.Run;
+		currentFriction = runFriction;
+	}
+
+	private void SetWalk()
+	{
+		playerStates = PlayerStates.Walk;
+		currentSpeed = playerWalkSpeed;
+		currentMoveStyle = CitizenAnimationHelper.MoveStyles.Walk;
+		currentFriction = runFriction;
+
+		playerController.Height = defaultPlayerHeight;
+		Vector3 headPosition = playerHead.Transform.LocalPosition;
+		headPosition.z = defaultPlayerHeadHeight;
+
+		playerHead.Transform.LocalPosition = Vector3.Lerp( playerHead.Transform.LocalPosition, headPosition, Time.Delta * crouchSpeed );
+	}
+
+	private void SetCrouch()
+	{
+		playerStates = PlayerStates.Crouch;
+		currentSpeed = 50f;
+		currentMoveStyle = CitizenAnimationHelper.MoveStyles.Walk;
+		currentFriction = crouchFriction;
+
+		playerController.Height = crouchHeight;
+		Vector3 headPosition = playerHead.Transform.LocalPosition;
+		headPosition.z = crouchHeight - 7;
+
+		playerHead.Transform.LocalPosition = Vector3.Lerp( playerHead.Transform.LocalPosition, headPosition, Time.Delta * crouchSpeed );
+	}
+
+	private bool CanUncrouch()
+	{
+		Vector3 headPosition = playerHead.Transform.Position;
+
+		float height = defaultPlayerHeight - crouchHeight - 7;
+
+		SceneTraceResult trace = Scene.Trace
+			.Ray( headPosition, headPosition + Vector3.Up * height )
+			.Size(new BBox(0f, 20f))
+			.Run();
+
+		return trace.Hit && playerStates == PlayerStates.Crouch;
 	}
 
 	// Building velocity from player input
@@ -118,7 +178,7 @@ public sealed class Player : Component
 		if (playerController.IsOnGround)
 		{
 			// Applying friction
-			playerController.ApplyFriction( groundFriction );
+			playerController.ApplyFriction( currentFriction );
 
 			playerController.Velocity = playerController.Velocity.WithZ( 0 );
 
@@ -181,8 +241,8 @@ public sealed class Player : Component
 		animationHelper.WithWishVelocity( wishDir );
 		animationHelper.WithVelocity( playerController.Velocity );
 		animationHelper.IsGrounded = playerController.IsOnGround;
-
 		animationHelper.MoveStyle = currentMoveStyle;
 
+		animationHelper.DuckLevel = playerStates == PlayerStates.Crouch ? 70f : 0f;
 	}
 }

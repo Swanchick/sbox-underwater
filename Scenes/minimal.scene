@@ -216,6 +216,31 @@
           "StartServer": true
         }
       ]
+    },
+    {
+      "Id": "95edeab3-eb58-4264-8fb9-f5f94b178ef0",
+      "Name": "Cube",
+      "Position": "81.94179,-34.41834,67.15945",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -241,6 +266,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-24T00:08:30.4771838\u002B02:00",
+  "LastSaved": "2024-02-24T01:28:00.2460398\u002B02:00",
   "__references": []
 }
