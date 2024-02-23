@@ -2,11 +2,21 @@ using Sandbox;
 using Sandbox.Citizen;
 using System;
 
+public enum PlayerStates
+{
+	Walk,
+	Run,
+	Crouch,
+	Swim
+}
+
 public sealed class Player : Component
 {
 	// Movement properties
 	[Property] public float playerSpeed = 500f;
 	[Property] public float groundFriction = 9f;
+	[Property] public float airFriction = 0.3f;
+	[Property] public float jumpForce = 300f;
 
 	// Camera rotation properties
 	[Property] public float cameraSensetivity = 5f;
@@ -19,7 +29,6 @@ public sealed class Player : Component
 	private CitizenAnimationHelper animationHelper { get; set; }
 
 	private float sceneGravity;
-
 
 	[Sync] public Rotation bodyRotation { get; set; }
 	[Sync] public Vector3 wishDir { get; set; }
@@ -38,8 +47,7 @@ public sealed class Player : Component
 			
 			return;
 		}
-
-
+		
 		sceneGravity = Scene.PhysicsWorld.Gravity.z;
 	}
 
@@ -84,6 +92,12 @@ public sealed class Player : Component
 			playerController.ApplyFriction( groundFriction );
 
 			playerController.Velocity = playerController.Velocity.WithZ( 0 );
+
+			if ( Input.Pressed( "Jump" ) )
+			{
+				playerController.Punch( Vector3.Up * jumpForce );
+				animationHelper.TriggerJump();
+			}
 		}
 		else
 		{
@@ -91,7 +105,7 @@ public sealed class Player : Component
 			playerController.Velocity += Vector3.Up * sceneGravity * Time.Delta;
 			
 			// Decreasing player's velocity if the player is not on the ground
-			finalVelocity *= 0.1f;
+			finalVelocity *= airFriction;
 		}
 
 		// Synchronizing velocity between all clients 
@@ -138,7 +152,6 @@ public sealed class Player : Component
 		animationHelper.WithWishVelocity( wishDir );
 		animationHelper.WithVelocity( playerController.Velocity );
 		animationHelper.IsGrounded = playerController.IsOnGround;
-
 		animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
 	}
 }

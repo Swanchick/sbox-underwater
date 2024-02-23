@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "2da5c71e-094e-49d4-87a6-c09622d84a33",
+    "Id": "89dbd81d-46db-40ad-b724-855c4b711cb0",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
@@ -21,18 +21,18 @@
         "groundFriction": 9,
         "playerBody": {
           "_type": "gameobject",
-          "go": "51304700-6174-4b3b-87ea-48179f4a753d"
+          "go": "7669a1e0-9978-4e98-a2c2-759971208970"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "d6de06da-acaa-4ca3-8648-4f90f114ff4a",
+          "go": "d3522070-bebb-44fa-a801-7a1c310ba8ab",
           "component_type": "CameraComponent"
         },
         "playerHead": {
           "_type": "gameobject",
-          "go": "12bde381-0507-49e7-be1b-1ed4f5f775d0"
+          "go": "e0225ce1-5be1-4ca9-885e-edf442428f98"
         },
-        "playerSpeed": 500
+        "playerSpeed": 400
       },
       {
         "__type": "CitizenAnimationHelper",
@@ -49,20 +49,20 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "51304700-6174-4b3b-87ea-48179f4a753d",
+          "go": "7669a1e0-9978-4e98-a2c2-759971208970",
           "component_type": "SkinnedModelRenderer"
         }
       }
     ],
     "Children": [
       {
-        "Id": "12bde381-0507-49e7-be1b-1ed4f5f775d0",
+        "Id": "e0225ce1-5be1-4ca9-885e-edf442428f98",
         "Name": "PlayerHead",
         "Position": "0,0,63",
         "Enabled": true,
         "Children": [
           {
-            "Id": "d6de06da-acaa-4ca3-8648-4f90f114ff4a",
+            "Id": "d3522070-bebb-44fa-a801-7a1c310ba8ab",
             "Name": "Camera",
             "Position": "0,0,0",
             "Tags": "maincamera",
@@ -89,7 +89,7 @@
         ]
       },
       {
-        "Id": "51304700-6174-4b3b-87ea-48179f4a753d",
+        "Id": "7669a1e0-9978-4e98-a2c2-759971208970",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [
