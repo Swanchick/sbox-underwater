@@ -27,6 +27,8 @@ public sealed class Player : Component
 	[Property] public float cameraSensetivity = 5f;
 	[Property] public float crouchHeight = 40f;
 
+	[Property] public float interactDistance = 50f;
+
 	[Property] public CameraComponent playerCamera;
 	[Property] public GameObject playerHead;
 	[Property] public GameObject playerBody;
@@ -74,6 +76,7 @@ public sealed class Player : Component
 		CameraRotation();
 		PlayerAnimation();
 		ControllPlayerStates();
+		Interact();
 	}
 
 	protected override void OnFixedUpdate()
@@ -154,6 +157,36 @@ public sealed class Player : Component
 			.Run();
 
 		return trace.Hit && playerStates == PlayerStates.Crouch;
+	}
+
+	private void Interact()
+	{
+		if ( IsProxy )
+			return;
+		
+		if ( !Input.Pressed( "use" ) )
+			return;
+
+		Vector3 cameraPosition = playerCamera.Transform.Position;
+		Rotation cameraRotation = playerCamera.Transform.Rotation;
+
+		SceneTraceResult trace = Scene.Trace
+			.Ray( cameraPosition, cameraPosition + cameraRotation.Forward * interactDistance )
+			.Run();
+
+		if ( !trace.Hit )
+			return;
+
+		GameObject gameObject = trace.GameObject;
+		IInteractive interactive = gameObject.Components.Get<IInteractive>();
+
+		if ( interactive is null )
+			return;
+
+		if ( !interactive.IsInteractive )
+			return;
+
+		interactive.OnInteract( this );
 	}
 
 	// Building velocity from player input
