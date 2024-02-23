@@ -15,10 +15,14 @@ public sealed class Player : Component
 	[Property] public GameObject playerHead;
 	[Property] public GameObject playerBody;
 
-	private CharacterController playerController;
-	private CitizenAnimationHelper animationHelper;
+	private CharacterController playerController { get; set; }
+	private CitizenAnimationHelper animationHelper { get; set; }
+
+	private float sceneGravity;
+
 
 	[Sync] public Rotation bodyRotation { get; set; }
+	[Sync] public Vector3 wishDir { get; set; }
 
 	protected override void OnStart()
 	{
@@ -34,12 +38,15 @@ public sealed class Player : Component
 			
 			return;
 		}
-	
+
+
+		sceneGravity = Scene.PhysicsWorld.Gravity.z;
 	}
 
 	protected override void OnUpdate()
 	{
 		CameraRotation();
+		PlayerAnimation();
 	}
 
 	protected override void OnFixedUpdate()
@@ -67,16 +74,40 @@ public sealed class Player : Component
 		if ( IsProxy )
 			return;
 
-		Vector3 playerVelocity = BuildInput();
-		playerVelocity = playerVelocity.WithZ( 0 );
-		playerVelocity *= playerSpeed;
+		Vector3 finalVelocity = BuildInput();
+		finalVelocity = finalVelocity.WithZ( 0 );
+		finalVelocity *= playerSpeed;
 
-		
+		if (playerController.IsOnGround)
+		{
+			// Applying friction
+			playerController.ApplyFriction( groundFriction );
+
+			playerController.Velocity = playerController.Velocity.WithZ( 0 );
+		}
+		else
+		{
+			// If the player is not on the ground, apply gravitation on the player
+			playerController.Velocity += Vector3.Up * sceneGravity * Time.Delta;
+			
+			// Decreasing player's velocity if the player is not on the ground
+			finalVelocity *= 0.1f;
+		}
+
+		// Synchronizing velocity between all clients 
+		wishDir = finalVelocity;
+
+		// Applying velocity and move
+		playerController.Accelerate( finalVelocity );
+		playerController.Move();
 	}
 	
 	// Rotating player camera
 	private void CameraRotation()
 	{
+		// Applying rotation of body on all clients
+		playerBody.Transform.Rotation = bodyRotation;
+		
 		if ( IsProxy )
 			return;
 
@@ -100,5 +131,14 @@ public sealed class Player : Component
 		// Applying rotation
 		playerHead.Transform.LocalRotation = headAngles.ToRotation();
 		playerCamera.Transform.LocalRotation = cameraAngles.ToRotation();
+	}
+
+	private void PlayerAnimation()
+	{
+		animationHelper.WithWishVelocity( wishDir );
+		animationHelper.WithVelocity( playerController.Velocity );
+		animationHelper.IsGrounded = playerController.IsOnGround;
+
+		animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
 	}
 }
