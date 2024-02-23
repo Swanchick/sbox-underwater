@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "89dbd81d-46db-40ad-b724-855c4b711cb0",
+    "Id": "4aa269b2-1e61-4046-b4b4-dcd63e4e03c0",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
@@ -17,22 +17,26 @@
       },
       {
         "__type": "Player",
+        "airFriction": 0.3,
         "cameraSensetivity": 0.1,
         "groundFriction": 9,
+        "jumpForce": 300,
         "playerBody": {
           "_type": "gameobject",
-          "go": "7669a1e0-9978-4e98-a2c2-759971208970"
+          "go": "2eb4ce05-0b0e-4664-87b0-d1185a47528c"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "d3522070-bebb-44fa-a801-7a1c310ba8ab",
+          "go": "5cc58a2b-4377-4444-b053-6b5f53e26ba1",
           "component_type": "CameraComponent"
         },
+        "playerCrouchSpeed": 100,
         "playerHead": {
           "_type": "gameobject",
-          "go": "e0225ce1-5be1-4ca9-885e-edf442428f98"
+          "go": "c79d16ca-ca09-4c53-aec9-17cc68dbecc4"
         },
-        "playerSpeed": 400
+        "playerRunSpeed": 250,
+        "playerWalkSpeed": 150
       },
       {
         "__type": "CitizenAnimationHelper",
@@ -49,20 +53,20 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "7669a1e0-9978-4e98-a2c2-759971208970",
+          "go": "2eb4ce05-0b0e-4664-87b0-d1185a47528c",
           "component_type": "SkinnedModelRenderer"
         }
       }
     ],
     "Children": [
       {
-        "Id": "e0225ce1-5be1-4ca9-885e-edf442428f98",
+        "Id": "c79d16ca-ca09-4c53-aec9-17cc68dbecc4",
         "Name": "PlayerHead",
         "Position": "0,0,63",
         "Enabled": true,
         "Children": [
           {
-            "Id": "d3522070-bebb-44fa-a801-7a1c310ba8ab",
+            "Id": "5cc58a2b-4377-4444-b053-6b5f53e26ba1",
             "Name": "Camera",
             "Position": "0,0,0",
             "Tags": "maincamera",
@@ -89,7 +93,7 @@
         ]
       },
       {
-        "Id": "7669a1e0-9978-4e98-a2c2-759971208970",
+        "Id": "2eb4ce05-0b0e-4664-87b0-d1185a47528c",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [

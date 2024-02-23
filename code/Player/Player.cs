@@ -13,7 +13,10 @@ public enum PlayerStates
 public sealed class Player : Component
 {
 	// Movement properties
-	[Property] public float playerSpeed = 500f;
+	[Property] public float playerWalkSpeed = 250f;
+	[Property] public float playerRunSpeed = 500f;
+	[Property] public float playerCrouchSpeed = 200f;
+
 	[Property] public float groundFriction = 9f;
 	[Property] public float airFriction = 0.3f;
 	[Property] public float jumpForce = 300f;
@@ -34,6 +37,10 @@ public sealed class Player : Component
 
 	[Sync] public Rotation bodyRotation { get; set; }
 	[Sync] public Vector3 wishDir { get; set; }
+	[Sync] public PlayerStates playerStates { get; set; }
+
+	[Sync] public float currentSpeed { get; set; }
+	[Sync] public CitizenAnimationHelper.MoveStyles currentMoveStyle { get; set; }
 
 	protected override void OnStart()
 	{
@@ -57,11 +64,31 @@ public sealed class Player : Component
 	{
 		CameraRotation();
 		PlayerAnimation();
+		ControllPlayerStates();
 	}
 
 	protected override void OnFixedUpdate()
 	{
 		Move();
+	}
+
+	private void ControllPlayerStates()
+	{
+		if ( IsProxy )
+			return;
+		
+		if ( Input.Down( "Run" ) )
+		{
+			playerStates = PlayerStates.Run;
+			currentSpeed = playerRunSpeed;
+			currentMoveStyle = CitizenAnimationHelper.MoveStyles.Run;
+		} 
+		else
+		{
+			playerStates = PlayerStates.Walk;
+			currentSpeed = playerWalkSpeed;
+			currentMoveStyle = CitizenAnimationHelper.MoveStyles.Walk;
+		}
 	}
 
 	// Building velocity from player input
@@ -86,7 +113,7 @@ public sealed class Player : Component
 
 		Vector3 finalVelocity = BuildInput();
 		finalVelocity = finalVelocity.WithZ( 0 );
-		finalVelocity *= playerSpeed;
+		finalVelocity *= currentSpeed;
 
 		if (playerController.IsOnGround)
 		{
@@ -154,6 +181,8 @@ public sealed class Player : Component
 		animationHelper.WithWishVelocity( wishDir );
 		animationHelper.WithVelocity( playerController.Velocity );
 		animationHelper.IsGrounded = playerController.IsOnGround;
-		animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
+
+		animationHelper.MoveStyle = currentMoveStyle;
+
 	}
 }
