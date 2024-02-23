@@ -144,7 +144,7 @@
     {
       "Id": "5b483a09-bbf2-4949-98c7-a73b789d0ee7",
       "Name": "Cube (2)",
-      "Position": "49.53707,34.08896,43.67614",
+      "Position": "36.64984,52.12666,43.67614",
       "Rotation": "0.00000001819328,-0.00000000000000008235059,0.3052325,0.952278",
       "Scale": "0.5632889,0.5632889,0.5632889",
       "Enabled": true,
@@ -241,6 +241,115 @@
           "Scale": 0.2
         }
       ]
+    },
+    {
+      "Id": "0b0f2246-2290-4664-9e18-70a1fc136e01",
+      "Name": "Player",
+      "Tags": "player",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "CharacterController",
+          "Acceleration": 10,
+          "Bounciness": 0.3,
+          "GroundAngle": 45,
+          "Height": 70,
+          "IgnoreLayers": "",
+          "Radius": 7,
+          "StepHeight": 18
+        },
+        {
+          "__type": "Player",
+          "groundFriction": 9,
+          "playerBody": {
+            "_type": "gameobject",
+            "go": "c846de59-920e-4bee-bd49-60c4e107cbf5"
+          },
+          "playerCamera": {
+            "_type": "component",
+            "go": "79d15315-cfec-4bf2-8946-bbf6aa4bedc7",
+            "component_type": "CameraComponent"
+          },
+          "playerHead": {
+            "_type": "gameobject",
+            "go": "4dff9b72-60f0-4247-bc6c-bdaec43cad72"
+          },
+          "playerSpeed": 500
+        },
+        {
+          "__type": "CitizenAnimationHelper",
+          "BodyWeight": 1,
+          "EyeSource": null,
+          "EyesWeight": 1,
+          "HeadWeight": 1,
+          "Height": 1,
+          "IkLeftFoot": null,
+          "IkLeftHand": null,
+          "IkRightFoot": null,
+          "IkRightHand": null,
+          "LookAt": null,
+          "LookAtEnabled": false,
+          "Target": {
+            "_type": "component",
+            "go": "c846de59-920e-4bee-bd49-60c4e107cbf5",
+            "component_type": "SkinnedModelRenderer"
+          }
+        }
+      ],
+      "Children": [
+        {
+          "Id": "4dff9b72-60f0-4247-bc6c-bdaec43cad72",
+          "Name": "PlayerHead",
+          "Position": "0,0,63",
+          "Enabled": true,
+          "Children": [
+            {
+              "Id": "79d15315-cfec-4bf2-8946-bbf6aa4bedc7",
+              "Name": "Camera",
+              "Position": "0,0,0",
+              "Tags": "maincamera",
+              "Enabled": true,
+              "Components": [
+                {
+                  "__type": "CameraComponent",
+                  "BackgroundColor": "0.33333,0.46275,0.52157,1",
+                  "ClearFlags": "All",
+                  "FieldOfView": 100,
+                  "IsMainCamera": true,
+                  "Orthographic": false,
+                  "OrthographicHeight": 1204,
+                  "Priority": 1,
+                  "RenderExcludeTags": "",
+                  "RenderTags": "",
+                  "TargetEye": "None",
+                  "Viewport": "0,0,1,1",
+                  "ZFar": 10000,
+                  "ZNear": 10
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Id": "c846de59-920e-4bee-bd49-60c4e107cbf5",
+          "Name": "PlayerBody",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "SkinnedModelRenderer",
+              "AnimationGraph": null,
+              "BodyGroups": 341,
+              "BoneMergeTarget": null,
+              "CreateBoneObjects": false,
+              "MaterialGroup": null,
+              "MaterialOverride": null,
+              "Model": "models/citizen/citizen.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
+            }
+          ]
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -266,6 +375,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-23T19:48:00.7733876\u002B02:00",
+  "LastSaved": "2024-02-23T20:24:40.6015223\u002B02:00",
   "__references": []
 }
