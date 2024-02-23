@@ -198,7 +198,7 @@
       "Enabled": true,
       "Components": [
         {
-          "__type": "NetworkHelper",
+          "__type": "NetworkManager",
           "PlayerPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/player/player.prefab"
@@ -241,6 +241,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-23T22:39:51.9809921\u002B02:00",
+  "LastSaved": "2024-02-23T23:28:34.2012931\u002B02:00",
   "__references": []
 }

@@ -25,6 +25,8 @@ public sealed class Player : Component
 	[Property] public GameObject playerHead;
 	[Property] public GameObject playerBody;
 
+	public Connection playerConnection;
+
 	private CharacterController playerController { get; set; }
 	private CitizenAnimationHelper animationHelper { get; set; }
 
