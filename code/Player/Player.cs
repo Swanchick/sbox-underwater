@@ -67,7 +67,6 @@ public sealed class Player : Component
 		}
 		
 		sceneGravity = Scene.PhysicsWorld.Gravity.z;
-		
 	}
 
 	protected override void OnUpdate()
@@ -107,6 +106,12 @@ public sealed class Player : Component
 		currentSpeed = playerRunSpeed;
 		currentMoveStyle = CitizenAnimationHelper.MoveStyles.Run;
 		currentFriction = runFriction;
+
+		playerController.Height = defaultPlayerHeight;
+		Vector3 headPosition = playerHead.Transform.LocalPosition;
+		headPosition.z = defaultPlayerHeadHeight;
+
+		playerHead.Transform.LocalPosition = Vector3.Lerp( playerHead.Transform.LocalPosition, headPosition, Time.Delta * crouchSpeed );
 	}
 
 	private void SetWalk()
@@ -145,7 +150,7 @@ public sealed class Player : Component
 
 		SceneTraceResult trace = Scene.Trace
 			.Ray( headPosition, headPosition + Vector3.Up * height )
-			.Size(new BBox(0f, 20f))
+			.Size(new BBox(0f, playerController.Radius + 5f))
 			.Run();
 
 		return trace.Hit && playerStates == PlayerStates.Crouch;
