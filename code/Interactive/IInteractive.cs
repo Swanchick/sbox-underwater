@@ -1,8 +1,10 @@
 ﻿using Sandbox;
+using System;
 
 public interface IInteractive
 {
 	bool IsInteractive { get; }
 
-	void OnInteract(Player player);
+	[Broadcast]
+	void OnInteract(Guid userId);
 }

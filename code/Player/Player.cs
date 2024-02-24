@@ -186,7 +186,9 @@ public sealed class Player : Component
 		if ( !interactive.IsInteractive )
 			return;
 
-		interactive.OnInteract( this );
+		Log.Info( "Hello World" );
+
+		interactive.OnInteract( GameObject.Id );
 	}
 
 	// Building velocity from player input
