@@ -2,6 +2,9 @@
 
 public sealed class AirTrigger : Component, Component.ITriggerListener
 {
+	[Property] public bool canParentPlayer = false;
+	[Property] public GameObject toParent;
+
 	public void OnTriggerEnter( Collider other )
 	{
 		Player player = other.GameObject.Components.Get<Player>();
@@ -9,7 +12,14 @@ public sealed class AirTrigger : Component, Component.ITriggerListener
 		if ( player is null )
 			return;
 
-		player.EnteredIntoAirTrigger( GameObject );
+		if ( canParentPlayer )
+		{
+			player.EnteredIntoAirTrigger( GameObject, toParent );
+		}
+		else
+		{
+			player.EnteredIntoAirTrigger( GameObject );
+		}
 	}
 
 	public void OnTriggerExit( Collider other )

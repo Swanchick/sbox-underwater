@@ -173,7 +173,7 @@ public sealed class Player : Component
 		return trace.Hit && playerStates == PlayerStates.Crouch;
 	}
 
-	public void EnteredIntoAirTrigger(GameObject trigger)
+	public void EnteredIntoAirTrigger( GameObject trigger )
 	{
 		if ( airTriggers.Contains( trigger ) )
 			return;
@@ -184,6 +184,13 @@ public sealed class Player : Component
 		playerStates = PlayerStates.Walk;
 	}
 
+	public void EnteredIntoAirTrigger( GameObject trigger, GameObject parent )
+	{
+		EnteredIntoAirTrigger( trigger );
+
+		GameObject.Parent = parent;
+	}
+
 	public void LeavedAirTrigger(GameObject trigger)
 	{
 		if ( !airTriggers.Contains( trigger ) )
@@ -191,10 +198,11 @@ public sealed class Player : Component
 
 		airTriggers.Remove( trigger );
 
-		if (airTriggers.Count == 0 )
-		{
-			playerStates = PlayerStates.Swim;
-		}
+		if ( airTriggers.Count != 0 )
+			return;
+
+		playerStates = PlayerStates.Swim;
+		GameObject.Parent = null;
 	}
 
 	private void Interact()

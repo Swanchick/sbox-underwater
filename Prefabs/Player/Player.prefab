@@ -80,7 +80,8 @@
         },
         "playerRunSpeed": 250,
         "playerWalkSpeed": 150,
-        "runFriction": 5
+        "runFriction": 5,
+        "waterSpeed": 250
       }
     ],
     "Children": [
@@ -133,6 +134,24 @@
             "Model": "models/citizen/citizen.vmdl",
             "RenderType": "On",
             "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "Id": "954fd162-d17b-4ad1-9d12-45e8667a97c0",
+        "Name": "HUDInventory",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "ScreenPanel",
+            "AutoScreenScale": true,
+            "Opacity": 1,
+            "Scale": 1,
+            "ZIndex": 100
+          },
+          {
+            "__type": "Inventory",
+            "MyStringValue": "Hello World!"
           }
         ]
       }
