@@ -251,7 +251,37 @@
     {
       "Id": "42f93678-eca6-4d0f-92b6-7dd579e77f55",
       "Name": "AirTrigger",
-      "Position": "0,363.6096,132.0775",
+      "Position": "0,-5.765625,132.0775",
+      "Scale": "10,10,5",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,0",
+          "IsTrigger": true,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        },
+        {
+          "__type": "AirTrigger"
+        },
+        {
+          "__type": "ModelRenderer",
+          "__enabled": false,
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": "materials/tools/toolstrigger.vmat",
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "Id": "8e146de5-6df3-4186-b301-fae5f188de56",
+      "Name": "AirTrigger (1)",
+      "Position": "0,427.1854,132.0775",
       "Scale": "10,10,5",
       "Enabled": true,
       "Components": [
@@ -302,6 +332,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-24T15:46:17.48406\u002B02:00",
+  "LastSaved": "2024-02-24T18:08:18.0905813\u002B02:00",
   "__references": []
 }

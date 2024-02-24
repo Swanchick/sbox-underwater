@@ -17,6 +17,7 @@ public sealed class Player : Component
 	[Property] public float playerRunSpeed = 500f;
 	[Property] public float playerCrouchSpeed = 200f;
 	[Property] public float crouchSpeed = 20f;
+	[Property] public float waterSpeed = 
 
 	[Property] public float runFriction = 5f;
 	[Property] public float crouchFriction = 3f;
@@ -42,6 +43,8 @@ public sealed class Player : Component
 	private float sceneGravity;
 	private float defaultPlayerHeadHeight;
 	private float defaultPlayerHeight;
+
+	private List<GameObject> airTriggers = new();
 
 	[Sync] public Rotation bodyRotation { get; set; }
 	[Sync] public Vector3 wishDir { get; set; }
@@ -84,13 +87,17 @@ public sealed class Player : Component
 	protected override void OnFixedUpdate()
 	{
 		Move();
+		MoveInWater();
 	}
 
 	private void ControllPlayerStates()
 	{
 		if ( IsProxy )
 			return;
-		
+
+		if ( playerStates == PlayerStates.Swim )
+			return;
+
 		if ( Input.Down( "Run" ) && playerStates != PlayerStates.Crouch )
 		{
 			SetRun();
@@ -155,13 +162,39 @@ public sealed class Player : Component
 
 		float height = defaultPlayerHeight - crouchHeight - 7;
 
+		BBox hull = new BBox( 0f, playerController.Radius + 5f );
+
 		SceneTraceResult trace = Scene.Trace
 			.Ray( headPosition, headPosition + Vector3.Up * height )
 			.WithoutTags( "player" )
-			.Size(new BBox(0f, playerController.Radius + 5f))
+			.Size( hull )
 			.Run();
 
 		return trace.Hit && playerStates == PlayerStates.Crouch;
+	}
+
+	public void EnteredIntoAirTrigger(GameObject trigger)
+	{
+		if ( airTriggers.Contains( trigger ) )
+			return;
+
+
+		airTriggers.Add( trigger );
+
+		playerStates = PlayerStates.Walk;
+	}
+
+	public void LeavedAirTrigger(GameObject trigger)
+	{
+		if ( !airTriggers.Contains( trigger ) )
+			return;
+
+		airTriggers.Remove( trigger );
+
+		if (airTriggers.Count == 0 )
+		{
+			playerStates = PlayerStates.Swim;
+		}
 	}
 
 	private void Interact()
@@ -213,10 +246,22 @@ public sealed class Player : Component
 		return direction.Normal;
 	}
 	
+	// Building velocity from player input for water movement
+	private Vector3 BuildVerticalInput()
+	{
+		float upDown = SUtils.GetButton( "Jump" ) - SUtils.GetButton( "Duck" );
+		Vector3 direction = Transform.Rotation.Up * upDown;
+
+		return direction.Normal;
+	}
+
 	// Creating velocity and accelerating a player there
 	private void Move()
 	{
 		if ( IsProxy )
+			return;
+
+		if ( playerStates == PlayerStates.Swim )
 			return;
 
 		Vector3 finalVelocity = BuildInput();
@@ -252,7 +297,26 @@ public sealed class Player : Component
 		playerController.Accelerate( finalVelocity );
 		playerController.Move();
 	}
-	
+
+	// Creating velocity and accelerating a player there in water
+	private void MoveInWater()
+	{
+		if (IsProxy)
+			return;
+
+		if ( playerStates != PlayerStates.Swim )
+			return;
+
+		Vector3 finalVelocity = BuildInput() * playerWalkSpeed;
+		finalVelocity += BuildVerticalInput() * playerWalkSpeed;
+
+		wishDir = finalVelocity;
+
+		playerController.ApplyFriction( 1f );
+		playerController.Accelerate( finalVelocity );
+		playerController.Move();
+	}
+
 	// Rotating player camera
 	private void CameraRotation()
 	{
@@ -288,7 +352,8 @@ public sealed class Player : Component
 	{
 		animationHelper.WithWishVelocity( wishDir );
 		animationHelper.WithVelocity( playerController.Velocity );
-		animationHelper.IsGrounded = playerController.IsOnGround;
+		animationHelper.IsGrounded = playerController.IsOnGround && playerStates != PlayerStates.Swim;
+		animationHelper.IsSwimming = playerStates == PlayerStates.Swim;
 		animationHelper.MoveStyle = currentMoveStyle;
 
 		animationHelper.DuckLevel = playerStates == PlayerStates.Crouch ? 70f : 0f;

@@ -1,46 +1,27 @@
 {
   "RootObject": {
-    "Id": "0e554865-5784-4f12-ab5a-edf78e58469e",
+    "Id": "d7171ed2-cfb2-4db9-8422-22265e5d6379",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
     "Components": [
+      {
+        "__type": "BoxCollider",
+        "Center": "0,0,17.10002",
+        "IsTrigger": false,
+        "Scale": "10,10,31.90009",
+        "Static": false,
+        "Surface": null
+      },
       {
         "__type": "CharacterController",
         "Acceleration": 10,
         "Bounciness": 0.1,
         "GroundAngle": 45,
         "Height": 70,
-        "IgnoreLayers": "",
+        "IgnoreLayers": "player",
         "Radius": 7,
         "StepHeight": 18
-      },
-      {
-        "__type": "Player",
-        "airFriction": 0.3,
-        "cameraSensetivity": 0.1,
-        "crouchFriction": 3,
-        "crouchHeight": 40,
-        "crouchSpeed": 20,
-        "interactDistance": 50,
-        "jumpForce": 300,
-        "playerBody": {
-          "_type": "gameobject",
-          "go": "001bf493-d14a-470e-a5e5-281076255410"
-        },
-        "playerCamera": {
-          "_type": "component",
-          "go": "e90d4e34-cfd7-4a9e-a4ed-fc2b3c8b51de",
-          "component_type": "CameraComponent"
-        },
-        "playerCrouchSpeed": 100,
-        "playerHead": {
-          "_type": "gameobject",
-          "go": "a316dcd1-4b35-43be-afcb-e395f758f3f6"
-        },
-        "playerRunSpeed": 250,
-        "playerWalkSpeed": 150,
-        "runFriction": 5
       },
       {
         "__type": "CitizenAnimationHelper",
@@ -57,7 +38,7 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "001bf493-d14a-470e-a5e5-281076255410",
+          "go": "19efc7f3-86a2-47c7-b54a-7c851565b12f",
           "component_type": "SkinnedModelRenderer"
         }
       },
@@ -75,23 +56,42 @@
         "Volume": 0.1
       },
       {
-        "__type": "BoxCollider",
-        "Center": "0,0,35",
-        "IsTrigger": false,
-        "Scale": "10,10,70",
-        "Static": false,
-        "Surface": null
+        "__type": "Player",
+        "airFriction": 0.3,
+        "cameraSensetivity": 0.1,
+        "crouchFriction": 3,
+        "crouchHeight": 40,
+        "crouchSpeed": 20,
+        "interactDistance": 50,
+        "jumpForce": 300,
+        "playerBody": {
+          "_type": "gameobject",
+          "go": "19efc7f3-86a2-47c7-b54a-7c851565b12f"
+        },
+        "playerCamera": {
+          "_type": "component",
+          "go": "788987b3-e9b2-4deb-87d8-36d5ba8f5a3c",
+          "component_type": "CameraComponent"
+        },
+        "playerCrouchSpeed": 100,
+        "playerHead": {
+          "_type": "gameobject",
+          "go": "77dce93a-7fa6-405d-bad8-349240721f47"
+        },
+        "playerRunSpeed": 250,
+        "playerWalkSpeed": 150,
+        "runFriction": 5
       }
     ],
     "Children": [
       {
-        "Id": "a316dcd1-4b35-43be-afcb-e395f758f3f6",
+        "Id": "77dce93a-7fa6-405d-bad8-349240721f47",
         "Name": "PlayerHead",
         "Position": "0,0,63",
         "Enabled": true,
         "Children": [
           {
-            "Id": "e90d4e34-cfd7-4a9e-a4ed-fc2b3c8b51de",
+            "Id": "788987b3-e9b2-4deb-87d8-36d5ba8f5a3c",
             "Name": "Camera",
             "Position": "0,0,0",
             "Tags": "maincamera",
@@ -118,7 +118,7 @@
         ]
       },
       {
-        "Id": "001bf493-d14a-470e-a5e5-281076255410",
+        "Id": "19efc7f3-86a2-47c7-b54a-7c851565b12f",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [

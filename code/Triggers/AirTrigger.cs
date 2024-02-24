@@ -4,11 +4,21 @@ public sealed class AirTrigger : Component, Component.ITriggerListener
 {
 	public void OnTriggerEnter( Collider other )
 	{
-		Log.Info( other.GameObject.Name );
+		Player player = other.GameObject.Components.Get<Player>();
+
+		if ( player is null )
+			return;
+
+		player.EnteredIntoAirTrigger( GameObject );
 	}
 
 	public void OnTriggerExit( Collider other )
 	{
-		Log.Info( "Collider has leaved trigger" );
+		Player player = other.GameObject.Components.Get<Player>();
+
+		if ( player is null )
+			return;
+
+		player.LeavedAirTrigger( GameObject );
 	}
 }
