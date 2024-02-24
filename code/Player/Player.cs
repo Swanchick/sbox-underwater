@@ -37,6 +37,7 @@ public sealed class Player : Component
 
 	private CharacterController playerController { get; set; }
 	private CitizenAnimationHelper animationHelper { get; set; }
+	private SoundPointComponent playerInteractSound { get; set; }
 
 	private float sceneGravity;
 	private float defaultPlayerHeadHeight;
@@ -54,6 +55,7 @@ public sealed class Player : Component
 	{
 		playerController = Components.Get<CharacterController>();
 		animationHelper = Components.Get<CitizenAnimationHelper>();
+		playerInteractSound = Components.Get<SoundPointComponent>();
 
 		playerBody.Enabled = IsProxy;
 
@@ -101,6 +103,11 @@ public sealed class Player : Component
 		{
 			SetWalk();
 		}
+
+		if (playerStates != PlayerStates.Crouch )
+		{
+			UncrouchHead();
+		}
 	}
 
 	private void SetRun()
@@ -109,12 +116,6 @@ public sealed class Player : Component
 		currentSpeed = playerRunSpeed;
 		currentMoveStyle = CitizenAnimationHelper.MoveStyles.Run;
 		currentFriction = runFriction;
-
-		playerController.Height = defaultPlayerHeight;
-		Vector3 headPosition = playerHead.Transform.LocalPosition;
-		headPosition.z = defaultPlayerHeadHeight;
-
-		playerHead.Transform.LocalPosition = Vector3.Lerp( playerHead.Transform.LocalPosition, headPosition, Time.Delta * crouchSpeed );
 	}
 
 	private void SetWalk()
@@ -123,12 +124,6 @@ public sealed class Player : Component
 		currentSpeed = playerWalkSpeed;
 		currentMoveStyle = CitizenAnimationHelper.MoveStyles.Walk;
 		currentFriction = runFriction;
-
-		playerController.Height = defaultPlayerHeight;
-		Vector3 headPosition = playerHead.Transform.LocalPosition;
-		headPosition.z = defaultPlayerHeadHeight;
-
-		playerHead.Transform.LocalPosition = Vector3.Lerp( playerHead.Transform.LocalPosition, headPosition, Time.Delta * crouchSpeed );
 	}
 
 	private void SetCrouch()
@@ -141,6 +136,15 @@ public sealed class Player : Component
 		playerController.Height = crouchHeight;
 		Vector3 headPosition = playerHead.Transform.LocalPosition;
 		headPosition.z = crouchHeight - 7;
+
+		playerHead.Transform.LocalPosition = Vector3.Lerp( playerHead.Transform.LocalPosition, headPosition, Time.Delta * crouchSpeed );
+	}
+
+	private void UncrouchHead()
+	{
+		playerController.Height = defaultPlayerHeight;
+		Vector3 headPosition = playerHead.Transform.LocalPosition;
+		headPosition.z = defaultPlayerHeadHeight;
 
 		playerHead.Transform.LocalPosition = Vector3.Lerp( playerHead.Transform.LocalPosition, headPosition, Time.Delta * crouchSpeed );
 	}
@@ -175,7 +179,12 @@ public sealed class Player : Component
 			.Run();
 
 		if ( !trace.Hit )
+		{
 			return;
+		}
+
+		playerInteractSound.StopSound();
+		playerInteractSound.StartSound();
 
 		GameObject gameObject = trace.GameObject;
 		IInteractive interactive = gameObject.Components.Get<IInteractive>();
@@ -185,8 +194,6 @@ public sealed class Player : Component
 
 		if ( !interactive.IsInteractive )
 			return;
-
-		Log.Info( "Hello World" );
 
 		interactive.OnInteract( GameObject.Id );
 	}

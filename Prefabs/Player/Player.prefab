@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "7dccf3d2-d283-4ba4-b0df-b2a3c1b6fcb0",
+    "Id": "0e554865-5784-4f12-ab5a-edf78e58469e",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
@@ -19,25 +19,28 @@
         "__type": "Player",
         "airFriction": 0.3,
         "cameraSensetivity": 0.1,
+        "crouchFriction": 3,
         "crouchHeight": 40,
-        "groundFriction": 9,
+        "crouchSpeed": 20,
+        "interactDistance": 50,
         "jumpForce": 300,
         "playerBody": {
           "_type": "gameobject",
-          "go": "081b3932-94b1-4469-80e0-6fb85043327b"
+          "go": "001bf493-d14a-470e-a5e5-281076255410"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "fe006ddf-636a-45cd-bc44-3703c5ba6cbd",
+          "go": "e90d4e34-cfd7-4a9e-a4ed-fc2b3c8b51de",
           "component_type": "CameraComponent"
         },
         "playerCrouchSpeed": 100,
         "playerHead": {
           "_type": "gameobject",
-          "go": "df853a9e-8f85-4311-a30e-a2eb8ec0330e"
+          "go": "a316dcd1-4b35-43be-afcb-e395f758f3f6"
         },
         "playerRunSpeed": 250,
-        "playerWalkSpeed": 150
+        "playerWalkSpeed": 150,
+        "runFriction": 5
       },
       {
         "__type": "CitizenAnimationHelper",
@@ -54,20 +57,33 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "081b3932-94b1-4469-80e0-6fb85043327b",
+          "go": "001bf493-d14a-470e-a5e5-281076255410",
           "component_type": "SkinnedModelRenderer"
         }
+      },
+      {
+        "__type": "SoundPointComponent",
+        "Force2d": false,
+        "MaxRepeatTime": 1,
+        "MinRepeatTime": 1,
+        "Pitch": 1,
+        "PlayOnStart": false,
+        "Repeat": false,
+        "SoundEvent": "sounds/ui/interact.sound",
+        "SoundOverride": true,
+        "StopOnNew": false,
+        "Volume": 0.3
       }
     ],
     "Children": [
       {
-        "Id": "df853a9e-8f85-4311-a30e-a2eb8ec0330e",
+        "Id": "a316dcd1-4b35-43be-afcb-e395f758f3f6",
         "Name": "PlayerHead",
         "Position": "0,0,63",
         "Enabled": true,
         "Children": [
           {
-            "Id": "fe006ddf-636a-45cd-bc44-3703c5ba6cbd",
+            "Id": "e90d4e34-cfd7-4a9e-a4ed-fc2b3c8b51de",
             "Name": "Camera",
             "Position": "0,0,0",
             "Tags": "maincamera",
@@ -94,7 +110,7 @@
         ]
       },
       {
-        "Id": "081b3932-94b1-4469-80e0-6fb85043327b",
+        "Id": "001bf493-d14a-470e-a5e5-281076255410",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [

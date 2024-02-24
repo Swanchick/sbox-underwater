@@ -247,6 +247,21 @@
           "Surface": null
         }
       ]
+    },
+    {
+      "Id": "42f93678-eca6-4d0f-92b6-7dd579e77f55",
+      "Name": "AirTrigger",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,125",
+          "IsTrigger": true,
+          "Scale": "500,500,250",
+          "Static": false,
+          "Surface": null
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -272,6 +287,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-24T12:02:48.7105659\u002B02:00",
+  "LastSaved": "2024-02-24T15:13:58.1695967\u002B02:00",
   "__references": []
 }
