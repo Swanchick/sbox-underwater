@@ -157,6 +157,7 @@ public sealed class Player : Component
 
 		SceneTraceResult trace = Scene.Trace
 			.Ray( headPosition, headPosition + Vector3.Up * height )
+			.WithoutTags( "player" )
 			.Size(new BBox(0f, playerController.Radius + 5f))
 			.Run();
 

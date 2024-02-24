@@ -251,15 +251,46 @@
     {
       "Id": "42f93678-eca6-4d0f-92b6-7dd579e77f55",
       "Name": "AirTrigger",
+      "Position": "0,363.6096,132.0775",
+      "Scale": "10,10,5",
       "Enabled": true,
       "Components": [
         {
           "__type": "BoxCollider",
-          "Center": "0,0,125",
+          "Center": "0,0,0",
           "IsTrigger": true,
-          "Scale": "500,500,250",
+          "Scale": "50,50,50",
           "Static": false,
           "Surface": null
+        },
+        {
+          "__type": "AirTrigger"
+        },
+        {
+          "__type": "Rigidbody",
+          "AngularDamping": 0,
+          "Gravity": true,
+          "LinearDamping": 0,
+          "Locking": {
+            "X": true,
+            "Y": true,
+            "Z": true,
+            "Pitch": true,
+            "Yaw": true,
+            "Roll": true
+          },
+          "MassOverride": 0,
+          "RigidbodyFlags": 0,
+          "StartAsleep": false
+        },
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": "materials/tools/toolstrigger.vmat",
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
         }
       ]
     }
@@ -287,6 +318,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-24T15:13:58.1695967\u002B02:00",
+  "LastSaved": "2024-02-24T15:33:54.6440096\u002B02:00",
   "__references": []
 }
