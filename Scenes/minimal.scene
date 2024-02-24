@@ -80,6 +80,75 @@
       ]
     },
     {
+      "Id": "ae5aafa7-e551-498d-8100-85c91f6f30e3",
+      "Name": "Object",
+      "Position": "0,803.9498,0",
+      "Enabled": true,
+      "Children": [
+        {
+          "Id": "2836e524-25b6-4788-9c87-0381a68fd3ab",
+          "Name": "Plane (1)",
+          "Position": "0,0,0",
+          "Scale": "5,5,5",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "ModelRenderer",
+              "BodyGroups": 18446744073709551615,
+              "MaterialGroup": null,
+              "MaterialOverride": "materials/default.vmat",
+              "Model": "models/dev/plane.vmdl",
+              "RenderType": "On",
+              "Tint": "0.39546,0.51163,0.27128,1"
+            },
+            {
+              "__type": "BoxCollider",
+              "Center": "0,0,-5",
+              "IsTrigger": false,
+              "Scale": "100,100,10",
+              "Static": false,
+              "Surface": null
+            }
+          ]
+        },
+        {
+          "Id": "ae8f59f6-bcff-4c71-a3a8-50b3cc727fb0",
+          "Name": "AirTrigger (1)",
+          "Position": "0,0.9211426,125",
+          "Scale": "10,10,5",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "BoxCollider",
+              "Center": "0,0,0",
+              "IsTrigger": true,
+              "Scale": "50,50,50",
+              "Static": false,
+              "Surface": null
+            },
+            {
+              "__type": "AirTrigger",
+              "canParentPlayer": true,
+              "toParent": {
+                "_type": "gameobject",
+                "go": "ae5aafa7-e551-498d-8100-85c91f6f30e3"
+              }
+            },
+            {
+              "__type": "ModelRenderer",
+              "__enabled": false,
+              "BodyGroups": 18446744073709551615,
+              "MaterialGroup": null,
+              "MaterialOverride": "materials/tools/toolstrigger.vmat",
+              "Model": "models/dev/box.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "Id": "3c2490ef-54a0-49bb-8f13-490e40aa51d1",
       "Name": "Cube",
       "Position": "21.41682,74.1244,14.40159",
@@ -304,6 +373,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-24T19:06:27.044395\u002B02:00",
+  "LastSaved": "2024-02-24T20:42:25.3154214\u002B02:00",
   "__references": []
 }

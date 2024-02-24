@@ -1,6 +1,7 @@
 using Sandbox;
 using Sandbox.Citizen;
 using System;
+using static Sandbox.PhysicsGroupDescription.BodyPart;
 
 public enum PlayerStates
 {
@@ -44,6 +45,9 @@ public sealed class Player : Component
 	private float defaultPlayerHeadHeight;
 	private float defaultPlayerHeight;
 
+	private GameObject moveWithObject;
+	private Vector3 moveObjectDifference;
+
 	private List<GameObject> airTriggers = new();
 
 	[Sync] public Rotation bodyRotation { get; set; }
@@ -78,6 +82,8 @@ public sealed class Player : Component
 
 	protected override void OnUpdate()
 	{
+		Log.Info( playerStates );
+
 		CameraRotation();
 		PlayerAnimation();
 		ControllPlayerStates();
@@ -177,21 +183,21 @@ public sealed class Player : Component
 	{
 		if ( airTriggers.Contains( trigger ) )
 			return;
-
-
+		
 		airTriggers.Add( trigger );
 
 		playerStates = PlayerStates.Walk;
 	}
 
 	public void EnteredIntoAirTrigger( GameObject trigger, GameObject parent )
-	{
+	{	
 		EnteredIntoAirTrigger( trigger );
 
-		GameObject.Parent = parent;
+		Vector3 position = Transform.Position;
+		GameObject.SetParent( parent, true );
 	}
 
-	public void LeavedAirTrigger(GameObject trigger)
+	public void LeftAirTrigger(GameObject trigger)
 	{
 		if ( !airTriggers.Contains( trigger ) )
 			return;
@@ -201,8 +207,9 @@ public sealed class Player : Component
 		if ( airTriggers.Count != 0 )
 			return;
 
+		GameObject.SetParent( null, true );
+
 		playerStates = PlayerStates.Swim;
-		GameObject.Parent = null;
 	}
 
 	private void Interact()

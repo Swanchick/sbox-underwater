@@ -29,6 +29,6 @@ public sealed class AirTrigger : Component, Component.ITriggerListener
 		if ( player is null )
 			return;
 
-		player.LeavedAirTrigger( GameObject );
+		player.LeftAirTrigger( GameObject );
 	}
 }
