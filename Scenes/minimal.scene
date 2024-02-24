@@ -251,33 +251,30 @@
     {
       "Id": "42f93678-eca6-4d0f-92b6-7dd579e77f55",
       "Name": "AirTrigger",
+      "Position": "0,363.6096,132.0775",
+      "Scale": "10,10,5",
       "Enabled": true,
       "Components": [
         {
           "__type": "BoxCollider",
-          "Center": "0,0,125",
+          "Center": "0,0,0",
           "IsTrigger": true,
-          "Scale": "500,500,250",
+          "Scale": "50,50,50",
           "Static": false,
           "Surface": null
-        }
-      ]
-    },
-    {
-      "Id": "1946a32b-7765-41f0-b822-e77668741712",
-      "Name": "Inventory",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "ScreenPanel",
-          "AutoScreenScale": true,
-          "Opacity": 1,
-          "Scale": 1,
-          "ZIndex": 100
         },
         {
-          "__type": "Inventory",
-          "MyStringValue": "Hello World!"
+          "__type": "AirTrigger"
+        },
+        {
+          "__type": "ModelRenderer",
+          "__enabled": false,
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": "materials/tools/toolstrigger.vmat",
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
         }
       ]
     }
@@ -305,6 +302,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-24T15:34:25.337695\u002B02:00",
+  "LastSaved": "2024-02-24T15:46:17.48406\u002B02:00",
   "__references": []
 }
