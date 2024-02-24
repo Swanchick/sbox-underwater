@@ -17,7 +17,7 @@ public sealed class Player : Component
 	[Property] public float playerRunSpeed = 500f;
 	[Property] public float playerCrouchSpeed = 200f;
 	[Property] public float crouchSpeed = 20f;
-	[Property] public float waterSpeed = 
+	[Property] public float waterSpeed = 250f;
 
 	[Property] public float runFriction = 5f;
 	[Property] public float crouchFriction = 3f;
