@@ -1,0 +1,63 @@
+Inventory {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	.ItemBox1 {
+		border: 3px;
+		border-color: rgb(0, 7, 33);
+		background: rgb(0, 39, 167, 0.45);
+		border-radius: 10px;
+		position: absolute;
+		height: 100px;
+		width: 100px;
+		bottom: 5px;
+		left: 4px;
+		padding: 1px;
+		font-size: 25px;
+		font-family: Poppins;
+		color: #000000;
+	}
+
+	.ItemBox2 {
+		border: 3px;
+		border-color: rgb(0, 7, 33);
+		background: rgb(0, 39, 167, 0.45);
+		border-radius: 10px;
+		position: absolute;
+		height: 100px;
+		width: 100px;
+		bottom: 5px;
+		left: 110px;
+		padding: 1px;
+		font-size: 25px;
+		font-family: Poppins;
+		color: #000000;
+	}
+
+	.ItemBox3 {
+		border: 3px;
+		border-color: rgb(0, 7, 33);
+		background: rgb(0, 39, 167, 0.45);
+		border-radius: 10px;
+		position: absolute;
+		height: 100px;
+		width: 100px;
+		bottom: 5px;
+		left: 215px;
+		padding: 1px;
+		font-size: 25px;
+		font-family: Poppins;
+		color: #000000;
+	}
+
+	.ItemImage1 {
+		position: absolute;
+		height: 100px;
+		width: 100px;
+		bottom: 5px;
+		left: 5px;
+	}
+}

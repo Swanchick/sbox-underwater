@@ -262,6 +262,24 @@
           "Surface": null
         }
       ]
+    },
+    {
+      "Id": "1946a32b-7765-41f0-b822-e77668741712",
+      "Name": "Inventory",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ScreenPanel",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
+        },
+        {
+          "__type": "Inventory",
+          "MyStringValue": "Hello World!"
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -287,6 +305,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-24T15:13:58.1695967\u002B02:00",
+  "LastSaved": "2024-02-24T15:34:25.337695\u002B02:00",
   "__references": []
 }
