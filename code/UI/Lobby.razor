@@ -1,19 +1,59 @@
 @using Sandbox;
 @using Sandbox.UI;
 @using Sandbox.Network;
+@using System.Threading.Tasks;
 @inherits PanelComponent;
 
 <root>
-    <div class="main">
-        
+    <div class="menu">
+        <button onclick=@( () => CreateLobby() )>Create Lobby</button>
+
+        @if (lobbyInformations.Count != 0)
+        {
+            foreach (LobbyInformation lobby in lobbyInformations)
+            {
+                ulong lobbyId = lobby.LobbyId;
+
+                <button onclick=@( () => JoinLobby( lobbyId ) )>@lobbyId</button>
+            }
+        }
     </div>
 </root>
 
 @code
 {
-    [Property] public GameNetworkManager gameNetworkManager;
+    private List<LobbyInformation> lobbyInformations = new();
 
-    private List<LobbyInformation> lobbyInformations;
+    protected override void OnEnabled()
+    {
+        base.OnEnabled();
+
+        _ = RefreshLobbyList();
+    }
+
+    private void CreateLobby()
+    {
+        GameManager.ActiveScene.LoadFromFile("scenes/minimal.scene");
+    }
+
+    private void JoinLobby( ulong lobbyId )
+    {
+        GameNetworkSystem.Connect( lobbyId );
+
+        GameObject.Destroy();
+    }
+
+    private async Task RefreshLobbyList()
+    {
+        while (true)
+        {
+            lobbyInformations = await GameNetworkSystem.QueryLobbies();
+
+            StateHasChanged();
+
+            await Task.DelayRealtimeSeconds(5f);
+        }
+    }
 
     protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());
 }

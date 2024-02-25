@@ -1,7 +1,26 @@
 Lobby {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #111;
     pointer-events: all;
+    padding: 60px;
 
-    .main {
+    .menu {
+        background-color: #575757;
         flex-direction: column;
+        left: 30%;
+        right: 30%;
+        width: 40%;
+    }
+
+    button {
+        background-color: white;
+        color: #171F1B;
+        width: 100%;
+
+        padding: 10px 20px 10px 20px;
     }
 }

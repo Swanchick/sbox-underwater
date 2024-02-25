@@ -11,17 +11,14 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 	[Property] public GameObject PlayerPrefab { get; set; }
 	[Property] public List<GameObject> SpawnPoints { get; set; }
 
-	protected override async Task OnLoad()
+	protected override void OnStart()
 	{
-		if ( Scene.IsEditor )
-			return;
-
 		if ( !GameNetworkSystem.IsActive )
 		{
-			LoadingScreen.Title = "Creating Lobby";
-			await Task.DelayRealtimeSeconds( 0.1f );
 			GameNetworkSystem.CreateLobby();
 		}
+
+		base.OnStart();
 	}
 
 	public void OnActive( Connection channel )
