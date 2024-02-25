@@ -25,10 +25,8 @@ public sealed class PlayerMovement : Component
 	[Property] public float jumpForce = 300f;
 
 	// Camera rotation properties
-	[Property] public float cameraSensetivity = 5f;
+	[Property] public float cameraSensetivity = 0.1f;
 	[Property] public float crouchHeight = 40f;
-
-	[Property] public float interactDistance = 50f;
 
 	[Property] public CameraComponent playerCamera;
 	[Property] public GameObject playerHead;
@@ -38,14 +36,10 @@ public sealed class PlayerMovement : Component
 
 	private CharacterController playerController { get; set; }
 	private CitizenAnimationHelper animationHelper { get; set; }
-	private SoundPointComponent playerInteractSound { get; set; }
 
 	private float sceneGravity;
 	private float defaultPlayerHeadHeight;
 	private float defaultPlayerHeight;
-
-	private GameObject moveWithObject;
-	private Vector3 moveObjectDifference;
 
 	private List<GameObject> airTriggers = new();
 
@@ -61,7 +55,6 @@ public sealed class PlayerMovement : Component
 	{
 		playerController = Components.Get<CharacterController>();
 		animationHelper = Components.Get<CitizenAnimationHelper>();
-		playerInteractSound = Components.Get<SoundPointComponent>();
 
 		playerBody.Enabled = IsProxy;
 
@@ -84,7 +77,6 @@ public sealed class PlayerMovement : Component
 		CameraRotation();
 		PlayerAnimation();
 		ControllPlayerStates();
-		Interact();
 	}
 
 	protected override void OnFixedUpdate()
@@ -207,41 +199,6 @@ public sealed class PlayerMovement : Component
 		GameObject.SetParent( null, true );
 
 		playerStates = PlayerStates.Swim;
-	}
-
-	private void Interact()
-	{
-		if ( IsProxy )
-			return;
-		
-		if ( !Input.Pressed( "use" ) )
-			return;
-
-		Vector3 cameraPosition = playerCamera.Transform.Position;
-		Rotation cameraRotation = playerCamera.Transform.Rotation;
-
-		SceneTraceResult trace = Scene.Trace
-			.Ray( cameraPosition, cameraPosition + cameraRotation.Forward * interactDistance )
-			.Run();
-
-		if ( !trace.Hit )
-		{
-			return;
-		}
-
-		playerInteractSound.StopSound();
-		playerInteractSound.StartSound();
-
-		GameObject gameObject = trace.GameObject;
-		IInteractive interactive = gameObject.Components.Get<IInteractive>();
-
-		if ( interactive is null )
-			return;
-
-		if ( !interactive.IsInteractive )
-			return;
-
-		interactive.OnInteract( GameObject.Id );
 	}
 
 	// Building velocity from player input
