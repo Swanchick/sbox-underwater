@@ -4,27 +4,23 @@
 
 <root>
     <div class="table">
-        <div class="raw">
-            <div class="name">SWANCHICK</div>
-        </div>
-        <div class="raw">
-            <div class="name">KORPARLEE</div>
-        </div>
-        <div class="raw">
-            <div class="name">EZERWALD</div>
-        </div>
-        <div class="raw">
-            <div class="name">INTERNEDAS</div>
-        </div>
-        <div class="raw">
-            <div class="name">OHMNEX</div>
-        </div>
+        @foreach (Connection connection in Networking.Connections)
+        {
+            string displayName = connection.DisplayName;
+
+            <dive class="row">
+                @displayName
+            </dive>
+        }
     </div>
 </root>
 
 @code 
 {
-    
-    
+    protected override void OnUpdate()
+    {
+        SetClass( "hidden", !Input.Down( "Score" ) );
+    }
+
     protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());
 }

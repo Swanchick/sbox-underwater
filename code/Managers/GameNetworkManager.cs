@@ -3,22 +3,25 @@ using Sandbox.Network;
 using System.Threading.Tasks;
 using System;
 
-[Title( "Network Manager" )]
+[Title( "Game Network Manager" )]
 [Category( "Managers" )]
 [Icon( "electrical_services" )]
-public sealed class NetworkManager : Component, Component.INetworkListener
+public sealed class GameNetworkManager : Component, Component.INetworkListener
 {
-	[Property] public bool StartServer { get; set; } = true;
 	[Property] public GameObject PlayerPrefab { get; set; }
-
 	[Property] public List<GameObject> SpawnPoints { get; set; }
+
+	[Property] public CameraComponent LobbyCamera { get; set; }
+	[Property] public PanelComponent Lobby {  get; set; }
 
 	protected override async Task OnLoad()
 	{
+
+
 		if ( Scene.IsEditor )
 			return;
 
-		if ( StartServer && !GameNetworkSystem.IsActive )
+		if ( !GameNetworkSystem.IsActive )
 		{
 			LoadingScreen.Title = "Creating Lobby";
 			await Task.DelayRealtimeSeconds( 0.1f );

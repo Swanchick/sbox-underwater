@@ -1,0 +1,30 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.Network;
+@inherits PanelComponent;
+
+<root>
+    <div class="main">
+        <button @onclick=@( () => CreateLobby() )>Create Lobby</button>
+        
+    </div>
+</root>
+
+@code
+{
+    [Property] public GameNetworkManager gameNetworkManager;
+
+    private List<LobbyInformation> lobbyInformations;
+
+
+    private async void CreateLobby()
+    {
+        await gameNetworkManager.CreateLobby();
+        GameObject.Destroy();
+
+
+        
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());
+}
