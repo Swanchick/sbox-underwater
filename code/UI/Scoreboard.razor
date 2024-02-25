@@ -1,0 +1,30 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+
+<root>
+    <div class="table">
+        <div class="raw">
+            <div class="name">SWANCHICK</div>
+        </div>
+        <div class="raw">
+            <div class="name">KORPARLEE</div>
+        </div>
+        <div class="raw">
+            <div class="name">EZERWALD</div>
+        </div>
+        <div class="raw">
+            <div class="name">INTERNEDAS</div>
+        </div>
+        <div class="raw">
+            <div class="name">OHMNEX</div>
+        </div>
+    </div>
+</root>
+
+@code 
+{
+    
+    
+    protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());
+}

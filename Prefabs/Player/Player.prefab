@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "d7171ed2-cfb2-4db9-8422-22265e5d6379",
+    "Id": "4c9e23a1-f106-4271-8f71-0bb167c5bd49",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
@@ -38,7 +38,7 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "19efc7f3-86a2-47c7-b54a-7c851565b12f",
+          "go": "4b0f0ded-9c96-49b6-80ca-d998215b8289",
           "component_type": "SkinnedModelRenderer"
         }
       },
@@ -66,33 +66,42 @@
         "jumpForce": 300,
         "playerBody": {
           "_type": "gameobject",
-          "go": "19efc7f3-86a2-47c7-b54a-7c851565b12f"
+          "go": "4b0f0ded-9c96-49b6-80ca-d998215b8289"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "788987b3-e9b2-4deb-87d8-36d5ba8f5a3c",
+          "go": "4231eb0f-2eeb-451b-a766-ef57da47f835",
           "component_type": "CameraComponent"
         },
         "playerCrouchSpeed": 100,
         "playerHead": {
           "_type": "gameobject",
-          "go": "77dce93a-7fa6-405d-bad8-349240721f47"
+          "go": "2729bc50-e7d1-4535-8fcf-0cfd53cc1c2e"
         },
         "playerRunSpeed": 250,
         "playerWalkSpeed": 150,
         "runFriction": 5,
         "waterSpeed": 250
+      },
+      {
+        "__type": "PlayerClothes",
+        "playerClothes": "[{\u0022id\u0022:1594058106},{\u0022id\u0022:1772984322},{\u0022id\u0022:-778804355},{\u0022id\u0022:-1205155907},{\u0022id\u0022:-279002814}]",
+        "playerModelRenderer": {
+          "_type": "component",
+          "go": "4b0f0ded-9c96-49b6-80ca-d998215b8289",
+          "component_type": "SkinnedModelRenderer"
+        }
       }
     ],
     "Children": [
       {
-        "Id": "77dce93a-7fa6-405d-bad8-349240721f47",
+        "Id": "2729bc50-e7d1-4535-8fcf-0cfd53cc1c2e",
         "Name": "PlayerHead",
         "Position": "0,0,63",
         "Enabled": true,
         "Children": [
           {
-            "Id": "788987b3-e9b2-4deb-87d8-36d5ba8f5a3c",
+            "Id": "4231eb0f-2eeb-451b-a766-ef57da47f835",
             "Name": "Camera",
             "Position": "0,0,0",
             "Tags": "maincamera",
@@ -119,7 +128,7 @@
         ]
       },
       {
-        "Id": "19efc7f3-86a2-47c7-b54a-7c851565b12f",
+        "Id": "4b0f0ded-9c96-49b6-80ca-d998215b8289",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [
@@ -138,8 +147,8 @@
         ]
       },
       {
-        "Id": "954fd162-d17b-4ad1-9d12-45e8667a97c0",
-        "Name": "HUDInventory",
+        "Id": "9e6349e2-4f9d-4ea1-87e0-0e5c22ad9481",
+        "Name": "HUD",
         "Enabled": true,
         "Components": [
           {
@@ -152,6 +161,9 @@
           {
             "__type": "Inventory",
             "MyStringValue": "Hello World!"
+          },
+          {
+            "__type": "Scoreboard"
           }
         ]
       }

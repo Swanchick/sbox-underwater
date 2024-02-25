@@ -1,7 +1,6 @@
 using Sandbox;
 using Sandbox.Citizen;
 using System;
-using static Sandbox.PhysicsGroupDescription.BodyPart;
 
 public enum PlayerStates
 {
@@ -11,14 +10,14 @@ public enum PlayerStates
 	Swim
 }
 
-public sealed class Player : Component
+public sealed class PlayerMovement : Component
 {
 	// Movement properties
-	[Property] public float playerWalkSpeed = 250f;
-	[Property] public float playerRunSpeed = 500f;
-	[Property] public float playerCrouchSpeed = 200f;
+	[Property] public float playerWalkSpeed = 100f;
+	[Property] public float playerRunSpeed = 250f;
+	[Property] public float playerCrouchSpeed = 50f;
 	[Property] public float crouchSpeed = 20f;
-	[Property] public float waterSpeed = 250f;
+	[Property] public float playerWaterSpeed = 250f;
 
 	[Property] public float runFriction = 5f;
 	[Property] public float crouchFriction = 3f;
@@ -82,8 +81,6 @@ public sealed class Player : Component
 
 	protected override void OnUpdate()
 	{
-		Log.Info( playerStates );
-
 		CameraRotation();
 		PlayerAnimation();
 		ControllPlayerStates();
@@ -265,7 +262,7 @@ public sealed class Player : Component
 	private Vector3 BuildVerticalInput()
 	{
 		float upDown = SUtils.GetButton( "Jump" ) - SUtils.GetButton( "Duck" );
-		Vector3 direction = Transform.Rotation.Up * upDown;
+		Vector3 direction = Vector3.Up * upDown;
 
 		return direction.Normal;
 	}
@@ -322,8 +319,10 @@ public sealed class Player : Component
 		if ( playerStates != PlayerStates.Swim )
 			return;
 
-		Vector3 finalVelocity = BuildInput() * playerWalkSpeed;
-		finalVelocity += BuildVerticalInput() * playerWalkSpeed;
+		Vector3 finalVelocity = BuildInput();
+		finalVelocity += BuildVerticalInput();
+		finalVelocity = finalVelocity.Normal;
+		finalVelocity *= playerWaterSpeed;
 
 		wishDir = finalVelocity;
 
