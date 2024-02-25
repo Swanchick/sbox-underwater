@@ -11,13 +11,8 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 	[Property] public GameObject PlayerPrefab { get; set; }
 	[Property] public List<GameObject> SpawnPoints { get; set; }
 
-	[Property] public CameraComponent LobbyCamera { get; set; }
-	[Property] public PanelComponent Lobby {  get; set; }
-
 	protected override async Task OnLoad()
 	{
-
-
 		if ( Scene.IsEditor )
 			return;
 

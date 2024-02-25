@@ -206,11 +206,7 @@
         {
           "__type": "GameNetworkManager",
           "Lobby": null,
-          "LobbyCamera": {
-            "_type": "component",
-            "go": "7ab66565-a4d9-42b8-90d5-dc34f3caaa78",
-            "component_type": "CameraComponent"
-          },
+          "LobbyCamera": null,
           "PlayerPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/player/player.prefab"
@@ -224,8 +220,7 @@
               "_type": "gameobject",
               "go": "d8b46b61-9151-4c18-b500-b5fe904a3e4d"
             }
-          ],
-          "StartServer": true
+          ]
         }
       ]
     },
@@ -286,60 +281,6 @@
           "Tint": "1,1,1,1"
         }
       ]
-    },
-    {
-      "Id": "d570db02-e7b0-4438-90d2-fc6d794830dc",
-      "Name": "Lobby",
-      "Enabled": true,
-      "Children": [
-        {
-          "Id": "7ab66565-a4d9-42b8-90d5-dc34f3caaa78",
-          "Name": "Camera",
-          "Position": "-835.0976,0,176.4202",
-          "Tags": "maincamera",
-          "Enabled": true,
-          "Components": [
-            {
-              "__type": "CameraComponent",
-              "BackgroundColor": "0.33333,0.46275,0.52157,1",
-              "ClearFlags": "All",
-              "FieldOfView": 60,
-              "IsMainCamera": true,
-              "Orthographic": false,
-              "OrthographicHeight": 1204,
-              "Priority": 1,
-              "RenderExcludeTags": "",
-              "RenderTags": "",
-              "TargetEye": "None",
-              "Viewport": "0,0,1,1",
-              "ZFar": 10000,
-              "ZNear": 10
-            }
-          ]
-        },
-        {
-          "Id": "637a97a1-36d0-406e-8bba-77277b624ac3",
-          "Name": "Screen",
-          "Enabled": true,
-          "Components": [
-            {
-              "__type": "ScreenPanel",
-              "AutoScreenScale": true,
-              "Opacity": 1,
-              "Scale": 1,
-              "ZIndex": 100
-            },
-            {
-              "__type": "Lobby",
-              "gameNetworkManager": {
-                "_type": "component",
-                "go": "4d750b1e-12e0-45cf-aad1-8e0dcb68e937",
-                "component_type": "GameNetworkManager"
-              }
-            }
-          ]
-        }
-      ]
     }
   ],
   "SceneProperties": {
@@ -365,6 +306,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-25T20:18:10.2150876\u002B02:00",
+  "LastSaved": "2024-02-25T20:40:22.165377\u002B02:00",
   "__references": []
 }
