@@ -6,24 +6,64 @@
 @inherits PanelComponent;
 
 <root>
-    <div class="menu">
-        <div class="header">Lobby Menu</div>
-        
-        @if (players.Count != 0)
-        {
-            foreach (PlayerTeam team in players)
-            {
-                <div>@team.DisplayName</div>
-            }
-        }
+    <div class="row">
+        <div class="menu">
 
-        <button onclick=@(() => StartGame())>Start Game</button>
+            <div class="header">None Team</div>
+
+            @if (players.Count != 0)
+            {
+                foreach (PlayerTeam team in players)
+                {
+                    <div>@team.DisplayName</div>
+                }
+            }
+
+            <button onclick=@(() => StartGame())>Start Game</button>
+        </div>
+
+        <div class="menu">
+
+            <div class="header">Red Team</div>
+
+            @if (players.Count != 0)
+            {
+                foreach (PlayerTeam team in players)
+                {
+                    if (team.CurrentTeam == Team.Red)
+                    {
+                        <div>@team.DisplayName</div>
+                    }
+                }
+            }
+
+            <button>Join Red</button>
+        </div>
+
+        <div class="menu">
+
+            <div class="header">Blue Team</div>
+
+            @if (players.Count != 0)
+            {
+                foreach (PlayerTeam team in players)
+                {
+                    if (team.CurrentTeam == Team.Blue)
+                    {
+                        <div>@team.DisplayName</div>
+                    }
+                }
+            }
+
+            <button>Join Blue</button>
+        </div>
     </div>
+    
 </root>
 
 @code
 {
-    [Property] public GameNetworkManager gameNetworkManager;
+    [Property] public GameManager gameNetworkManager;
 
     private NetList<PlayerTeam> players = new();
 
