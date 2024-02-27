@@ -2,57 +2,49 @@
 @using Sandbox.UI;
 @using Sandbox.Network;
 @using System.Threading.Tasks;
+@using System;
 @inherits PanelComponent;
 
 <root>
     <div class="menu">
-        <button onclick=@( () => CreateLobby() )>Create Lobby</button>
-
-        @if (lobbyInformations.Count != 0)
+        <div class="header">Lobby Menu</div>
+        
+        @if (players.Count != 0)
         {
-            foreach (LobbyInformation lobby in lobbyInformations)
+            foreach (PlayerTeam team in players)
             {
-                ulong lobbyId = lobby.LobbyId;
-
-                <button onclick=@( () => JoinLobby( lobbyId ) )>@lobbyId</button>
+                <div>@team.DisplayName</div>
             }
         }
+
+        <button onclick=@(() => StartGame())>Test Button</button>
     </div>
 </root>
 
 @code
 {
-    private List<LobbyInformation> lobbyInformations = new();
+    [Property] public GameNetworkManager gameNetworkManager;
 
-    protected override void OnEnabled()
+    private NetList<PlayerTeam> players = new();
+
+    protected override void OnStart()
     {
-        base.OnEnabled();
-
-        _ = RefreshLobbyList();
+        _ = UpdatePlayerList();
     }
 
-    private void CreateLobby()
-    {
-        GameManager.ActiveScene.LoadFromFile("scenes/minimal.scene");
-    }
-
-    private void JoinLobby( ulong lobbyId )
-    {
-        GameNetworkSystem.Connect( lobbyId );
-
-        GameObject.Destroy();
-    }
-
-    private async Task RefreshLobbyList()
+    private async Task UpdatePlayerList()
     {
         while (true)
         {
-            lobbyInformations = await GameNetworkSystem.QueryLobbies();
-
-            StateHasChanged();
+            players = gameNetworkManager.PlayersTeam;
 
             await Task.DelayRealtimeSeconds(5f);
         }
+    }
+
+    private void StartGame()
+    {
+        gameNetworkManager.StartRound();
     }
 
     protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());

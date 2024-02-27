@@ -1,7 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.Network;
-using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
 [Title( "Game Network Manager" )]
 [Category( "Managers" )]
@@ -10,44 +10,60 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener
 {
 	[Property] public GameObject PlayerPrefab { get; set; }
 	[Property] public List<GameObject> SpawnPoints { get; set; }
+	[Property] public bool testSpawn { get; set; } = false;
+	[Property] public GameObject LobbyObject { get; set; }
 
-	protected override void OnStart()
+
+	[Sync] public bool IsRoundStarted { get; set; } = false;
+	[Sync] public NetList<PlayerTeam> PlayersTeam { get; set; } = new();
+
+	protected override async Task OnLoad()
 	{
+		if ( Scene.IsEditor )
+			return;
+
 		if ( !GameNetworkSystem.IsActive )
 		{
+			LoadingScreen.Title = "Creating Lobby";
+			await Task.DelayRealtimeSeconds( 0.1f );
 			GameNetworkSystem.CreateLobby();
 		}
-
-		base.OnStart();
 	}
 
 	public void OnActive( Connection channel )
 	{
-		Log.Info( $"Player '{channel.DisplayName}' has joined the game" );
+		PlayerTeam playerTeam = new PlayerTeam( channel, Team.None );
+		
+		PlayersTeam.Add( playerTeam );
+
+		Log.Info( PlayersTeam.Count );
+	}
+
+	public void StartRound()
+	{
+		if ( IsRoundStarted )
+			return;
+
+		IsRoundStarted = true;
 
 		if ( PlayerPrefab is null )
 			return;
 
-		Transform startLocation = FindSpawnLocation().WithScale( 1 );
+		GameObject spawnPoint = SpawnPoints[0];
+		IReadOnlyList<Connection> connections = Networking.Connections;
+		
+		foreach (Connection channel in connections )
+		{
+			GameObject player = PlayerPrefab.Clone( spawnPoint.Transform.World, name: channel.DisplayName );
+			player.NetworkSpawn( channel );
+		}
 
-		GameObject player = PlayerPrefab.Clone( startLocation, name: $"Player - {channel.DisplayName}" );
-		player.NetworkSpawn( channel );
+		DeleteLobby();
 	}
 
-	private Transform FindSpawnLocation()
+	[Broadcast]
+	private void DeleteLobby()
 	{
-
-		if ( SpawnPoints is not null && SpawnPoints.Count > 0 )
-		{
-			return Random.Shared.FromList( SpawnPoints, default ).Transform.World;
-		}
-
-		var spawnPoints = Scene.GetAllComponents<SpawnPoint>().ToArray();
-		if ( spawnPoints.Length > 0 )
-		{
-			return Random.Shared.FromArray( spawnPoints ).Transform.World;
-		}
-		
-		return Transform.World;
+		LobbyObject.Enabled = false;
 	}
 }

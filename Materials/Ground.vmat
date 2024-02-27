@@ -1,0 +1,11 @@
+
+Layer0
+{
+	shader "shaders/complex.shader_c"
+
+	TextureColor "textures/ground/vbtmajon_2k_albedo.jpg"
+	TextureAmbientOcclusion "textures/ground/vbtmajon_2k_ao.jpg"
+	TextureNormal "textures/ground/vbtmajon_2k_normal.jpg"
+	TextureRoughness "textures/ground/vbtmajon_2k_roughness.jpg"
+
+}

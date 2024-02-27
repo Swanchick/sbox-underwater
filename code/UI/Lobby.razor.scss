@@ -4,23 +4,31 @@ Lobby {
     left: 0px;
     right: 0px;
     bottom: 0px;
-    background-color: #111;
     pointer-events: all;
     padding: 60px;
 
     .menu {
         background-color: #575757;
         flex-direction: column;
-        left: 30%;
-        right: 30%;
-        width: 40%;
+        width: 30%;
+        height: 50%;
+        margin: auto;
+        padding: 10px;
+        color: white;
+        font-weight: 800;
+        font-size: 36px;
+    }
+
+    .header {
+        flex-direction: row;
+        justify-content: center;
+        font-size: 48px;
     }
 
     button {
         background-color: white;
         color: #171F1B;
         width: 100%;
-
         padding: 10px 20px 10px 20px;
     }
 }
