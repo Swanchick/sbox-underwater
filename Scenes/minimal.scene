@@ -176,7 +176,7 @@
     {
       "Id": "727460d0-47fc-4467-ad3d-bcaaf4bd4bc2",
       "Name": "Object (3)",
-      "Position": "1280,256,416",
+      "Position": "1280,256,400",
       "Enabled": true,
       "Components": [
         {
@@ -197,7 +197,7 @@
     {
       "Id": "d0aa959b-e0dc-41b3-8320-00231f5fe8c1",
       "Name": "Object (1)",
-      "Position": "-1280,-256,416",
+      "Position": "-1280,-256,400",
       "Enabled": true,
       "Components": [
         {
@@ -239,6 +239,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-27T20:22:01.7737671\u002B02:00",
+  "LastSaved": "2024-02-27T22:27:15.5859816\u002B02:00",
   "__references": []
 }

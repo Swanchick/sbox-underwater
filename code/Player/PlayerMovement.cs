@@ -22,6 +22,7 @@ public sealed class PlayerMovement : Component
 	[Property] public float runFriction = 5f;
 	[Property] public float crouchFriction = 3f;
 	[Property] public float airFriction = 0.3f;
+	[Property] public float waterFriction = 5f;
 	[Property] public float jumpForce = 300f;
 
 	// Camera rotation properties
@@ -283,7 +284,14 @@ public sealed class PlayerMovement : Component
 
 		wishDir = finalVelocity;
 
-		playerController.ApplyFriction( 1f );
+		// I don't know why, but player some how gets stucked in the floor, and cannot swim on top
+		// So that's why added this :)
+		if (playerController.IsOnGround && Input.Down( "Jump" ) )
+		{
+			playerController.Punch( Vector3.Up * currentSpeed );
+		}
+
+		playerController.ApplyFriction( waterFriction );
 		playerController.Accelerate( finalVelocity );
 		playerController.Move();
 	}
