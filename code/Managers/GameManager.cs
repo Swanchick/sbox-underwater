@@ -1,5 +1,7 @@
 ﻿using Sandbox;
+using Sandbox.Menu;
 using Sandbox.Network;
+using System;
 using System.Threading.Tasks;
 
 [Title( "Game Manager" )]
@@ -8,8 +10,8 @@ using System.Threading.Tasks;
 public sealed class GameManager : Component, Component.INetworkListener
 {
 	[Property] public GameObject PlayerPrefab { get; set; }
-	[Property] public List<GameObject> RedSpawnPoints { get; set; }
-	[Property] public List<GameObject> BlueSpawnPoints { get; set; }
+	[Property] public GameObject RedSpawnPoint { get; set; }
+	[Property] public GameObject BlueSpawnPoint { get; set; }
 	
 	[Property] public GameObject LobbyObject { get; set; }
 
@@ -29,25 +31,53 @@ public sealed class GameManager : Component, Component.INetworkListener
 		}
 	}
 
-	public void OnActive( Connection channel )
+	private void OnActive( Connection channel )
 	{
 		if ( IsRoundStarted )
 		{
-			SpawnPlayer( channel );
+			SpawnPlayer( channel, RedSpawnPoint );
 			
 			return;
 		}
 		
 		PlayerTeam playerTeam = new PlayerTeam( channel, Team.None );
 		PlayersTeam.Add( playerTeam );
-
-		Log.Info( PlayersTeam.Count );
 	}
 
-	private void SpawnPlayer( Connection channel )
+	private void OnDisconnected( Connection channel )
 	{
-		GameObject spawnPoint = RedSpawnPoints[0];
+		RemovePlayerTeam( channel.Id );
+	}
 
+	private void RemovePlayerTeam(Guid id)
+	{
+		foreach (PlayerTeam playerTeam in PlayersTeam )
+		{
+			if (playerTeam.PlayerId == id )
+			{
+				PlayersTeam.Remove( playerTeam );
+
+				break;
+			}
+		}
+	}
+	
+	[Broadcast]
+	public void ChangeTeam(Guid id, Team team)
+	{
+		if ( !Networking.IsHost )
+			return;
+
+		Connection channel = Networking.FindConnection( id );
+		PlayerTeam playerTeam = new PlayerTeam( channel, team );
+
+		RemovePlayerTeam( id );
+
+		PlayersTeam.Add( playerTeam );
+	}
+
+	private void SpawnPlayer( Connection channel, GameObject spawnPoint )
+	{
 		GameObject player = PlayerPrefab.Clone( spawnPoint.Transform.World, name: channel.DisplayName );
 		player.NetworkSpawn( channel );
 	}
@@ -61,13 +91,21 @@ public sealed class GameManager : Component, Component.INetworkListener
 
 		if ( PlayerPrefab is null )
 			return;
-
-		GameObject spawnPoint = RedSpawnPoints[0];
+		
 		IReadOnlyList<Connection> connections = Networking.Connections;
 		
-		foreach (Connection channel in connections )
+		foreach (PlayerTeam playerTeam in PlayersTeam)
 		{
-			SpawnPlayer( channel );
+			Connection channel = Networking.FindConnection( playerTeam.PlayerId );
+
+			if (playerTeam.CurrentTeam == Team.Red )
+			{
+				SpawnPlayer( channel, RedSpawnPoint );
+			}
+			else if (playerTeam.CurrentTeam == Team.Blue )
+			{
+				SpawnPlayer( channel, BlueSpawnPoint );
+			}
 		}
 
 		DeleteLobby();

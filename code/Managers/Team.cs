@@ -4,9 +4,9 @@ using System.Threading.Channels;
 
 public enum Team
 {
+	None,
 	Red,
-	Blue,
-	None
+	Blue
 }
 
 public struct PlayerTeam

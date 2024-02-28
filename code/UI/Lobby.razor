@@ -37,7 +37,7 @@
                 }
             }
 
-            <button>Join Red</button>
+            <button onclick=@(() => ChangeTeam(Team.Red))>Join Red</button>
         </div>
 
         <div class="menu">
@@ -55,7 +55,7 @@
                 }
             }
 
-            <button>Join Blue</button>
+            <button onclick=@(() => ChangeTeam(Team.Blue))>Join Blue</button>
         </div>
     </div>
     
@@ -85,6 +85,13 @@
     private void StartGame()
     {
         gameManager.StartRound();
+    }
+
+    private void ChangeTeam(Team team)
+    {
+        Connection channel = Connection.Local;
+
+        gameManager.ChangeTeam( channel.Id, team );
     }
 
     protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());

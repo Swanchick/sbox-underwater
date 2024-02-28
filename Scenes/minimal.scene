@@ -46,12 +46,10 @@
       "Components": [
         {
           "__type": "GameManager",
-          "BlueSpawnPoints": [
-            {
-              "_type": "gameobject",
-              "go": "d8b46b61-9151-4c18-b500-b5fe904a3e4d"
-            }
-          ],
+          "BlueSpawnPoint": {
+            "_type": "gameobject",
+            "go": "d8b46b61-9151-4c18-b500-b5fe904a3e4d"
+          },
           "LobbyObject": {
             "_type": "gameobject",
             "go": "8d8dad62-2fb0-4606-bb7a-d1b1584bbc5f"
@@ -60,12 +58,10 @@
             "_type": "gameobject",
             "prefab": "prefabs/player/player.prefab"
           },
-          "RedSpawnPoints": [
-            {
-              "_type": "gameobject",
-              "go": "0afa2db2-50ca-4ab9-8dca-a28b0e5311ad"
-            }
-          ]
+          "RedSpawnPoint": {
+            "_type": "gameobject",
+            "go": "0afa2db2-50ca-4ab9-8dca-a28b0e5311ad"
+          }
         }
       ]
     },
@@ -240,6 +236,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-28T19:13:16.1180395\u002B02:00",
+  "LastSaved": "2024-02-28T22:34:21.3287646\u002B02:00",
   "__references": []
 }

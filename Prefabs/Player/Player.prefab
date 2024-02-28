@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "79a72cda-8dd0-43c9-a15a-0804e985ee89",
+    "Id": "1ea212ab-0ae7-405a-b1c2-6fa4b47fd3d8",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
@@ -38,7 +38,7 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "86aee64b-8a83-43cc-85a8-270cb883a941",
+          "go": "b322b15e-918b-49af-8ecb-dc9361c9f0ab",
           "component_type": "SkinnedModelRenderer"
         }
       },
@@ -63,7 +63,7 @@
         "playerClothes": "[{\u0022id\u0022:1594058106},{\u0022id\u0022:1772984322},{\u0022id\u0022:-778804355},{\u0022id\u0022:-1205155907},{\u0022id\u0022:-279002814}]",
         "playerModelRenderer": {
           "_type": "component",
-          "go": "86aee64b-8a83-43cc-85a8-270cb883a941",
+          "go": "b322b15e-918b-49af-8ecb-dc9361c9f0ab",
           "component_type": "SkinnedModelRenderer"
         }
       },
@@ -77,41 +77,42 @@
         "jumpForce": 250,
         "playerBody": {
           "_type": "gameobject",
-          "go": "86aee64b-8a83-43cc-85a8-270cb883a941"
+          "go": "b322b15e-918b-49af-8ecb-dc9361c9f0ab"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "d6c87138-d979-44d5-803d-49f93a2b6f6e",
+          "go": "8d1add07-2fe5-4f39-bc50-fccf784fa01f",
           "component_type": "CameraComponent"
         },
         "playerCrouchSpeed": 50,
         "playerHead": {
           "_type": "gameobject",
-          "go": "c62fb8c8-6026-44f4-80d9-9691bc253abe"
+          "go": "5660fbc6-ceb1-4b84-8c2a-e1441828cfcb"
         },
         "playerRunSpeed": 250,
         "playerWalkSpeed": 150,
         "playerWaterSpeed": 250,
-        "runFriction": 6
+        "runFriction": 6,
+        "waterFriction": 5
       },
       {
         "__type": "PlayerInteract",
         "interactDistance": 50,
         "playerCamera": {
           "_type": "gameobject",
-          "go": "d6c87138-d979-44d5-803d-49f93a2b6f6e"
+          "go": "8d1add07-2fe5-4f39-bc50-fccf784fa01f"
         }
       }
     ],
     "Children": [
       {
-        "Id": "c62fb8c8-6026-44f4-80d9-9691bc253abe",
+        "Id": "5660fbc6-ceb1-4b84-8c2a-e1441828cfcb",
         "Name": "PlayerHead",
         "Position": "0,0,63",
         "Enabled": true,
         "Children": [
           {
-            "Id": "d6c87138-d979-44d5-803d-49f93a2b6f6e",
+            "Id": "8d1add07-2fe5-4f39-bc50-fccf784fa01f",
             "Name": "Camera",
             "Position": "0,0,0",
             "Tags": "maincamera",
@@ -138,7 +139,7 @@
         ]
       },
       {
-        "Id": "86aee64b-8a83-43cc-85a8-270cb883a941",
+        "Id": "b322b15e-918b-49af-8ecb-dc9361c9f0ab",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [
@@ -153,27 +154,6 @@
             "Model": "models/citizen/citizen.vmdl",
             "RenderType": "On",
             "Tint": "1,1,1,1"
-          }
-        ]
-      },
-      {
-        "Id": "eaf386ba-6073-4167-9c67-37195702d143",
-        "Name": "HUD",
-        "Enabled": true,
-        "Components": [
-          {
-            "__type": "ScreenPanel",
-            "AutoScreenScale": true,
-            "Opacity": 1,
-            "Scale": 1,
-            "ZIndex": 100
-          },
-          {
-            "__type": "Inventory",
-            "MyStringValue": "Hello World!"
-          },
-          {
-            "__type": "Scoreboard"
           }
         ]
       }
