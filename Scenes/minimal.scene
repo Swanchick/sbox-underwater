@@ -1,5 +1,5 @@
 {
-  "Id": "9f832399-4887-46b0-8f21-2ee284f538e2",
+  "Id": "73e31e17-72a7-4549-9070-334356ab54f1",
   "GameObjects": [
     {
       "Id": "0afa2db2-50ca-4ab9-8dca-a28b0e5311ad",
@@ -107,7 +107,11 @@
             },
             {
               "__type": "Lobby",
-              "gameNetworkManager": null
+              "gameManager": {
+                "_type": "component",
+                "go": "4d750b1e-12e0-45cf-aad1-8e0dcb68e937",
+                "component_type": "GameManager"
+              }
             }
           ]
         }
@@ -236,6 +240,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-27T23:20:29.9056978\u002B02:00",
+  "LastSaved": "2024-02-28T19:13:16.1180395\u002B02:00",
   "__references": []
 }

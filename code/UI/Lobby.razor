@@ -63,7 +63,7 @@
 
 @code
 {
-    [Property] public GameManager gameNetworkManager;
+    [Property] public GameManager gameManager;
 
     private NetList<PlayerTeam> players = new();
 
@@ -76,7 +76,7 @@
     {
         while (true)
         {
-            players = gameNetworkManager.PlayersTeam;
+            players = gameManager.PlayersTeam;
 
             await Task.DelayRealtimeSeconds(5f);
         }
@@ -84,7 +84,7 @@
 
     private void StartGame()
     {
-        gameNetworkManager.StartRound();
+        gameManager.StartRound();
     }
 
     protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());
