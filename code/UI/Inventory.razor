@@ -4,12 +4,12 @@
 
 <root>
     <div class="main">
-        @for (int slot = 0; slot < 4; slot++)
+        @for (int slot = 0; slot < playerInventory.MaxSlots; slot++)
         {
-            <div class="slot @((currentSlot == slot) ? "current-slot" : "")">
-                @if (slot < playerInventory.Inventory.Count)
+            <div class="slot @(currentSlot == slot ? "current-slot" : "")">
+                @if (slot < inventory.Count)
                 {
-                    Item item = playerInventory.Inventory[slot];
+                    Item item = inventory[slot];
 
                     <img src=@(item.ImagePath)></img>
                 }
@@ -20,8 +20,30 @@
 
 @code
 {
-    private int currentSlot = 1;
     [Property] public PlayerInventory playerInventory;
+
+    private List<Item> inventory = new();
+    private int currentSlot = 0;
+
+    protected override void OnStart()
+    {
+        playerInventory.OnItemAdded += OnItemAdded;
+        playerInventory.OnSlotChanged += OnSlotChanged;
+    }
+
+    private void OnItemAdded(List<Item> items)
+    {
+        inventory = items;
+
+        StateHasChanged();
+    }
+
+    private void OnSlotChanged(int newSlot)
+    {
+        currentSlot = newSlot;
+
+        StateHasChanged();
+    }
 
     protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());
 }
