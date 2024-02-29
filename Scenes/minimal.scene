@@ -217,6 +217,7 @@
       "Name": "TestItem",
       "Position": "-1805.735,-51.07482,593.241",
       "Scale": "0.5,0.5,0.5",
+      "Tags": "item",
       "Networked": true,
       "Enabled": true,
       "Components": [
@@ -295,6 +296,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-29T20:04:08.746178\u002B02:00",
+  "LastSaved": "2024-02-29T21:38:17.8297521\u002B02:00",
   "__references": []
 }
