@@ -4,60 +4,31 @@ Inventory {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	pointer-events: none;
 
-	.ItemBox1 {
-		border: 3px;
-		border-color: rgb(0, 7, 33);
-		background: rgb(0, 39, 167, 0.45);
-		border-radius: 10px;
+	.main {
 		position: absolute;
-		height: 100px;
-		width: 100px;
-		bottom: 5px;
-		left: 4px;
-		padding: 1px;
-		font-size: 25px;
-		font-family: Poppins;
-		color: #000000;
-	}
+		width: 100%;
+		height: 96px;
+		left: 0;
+		bottom: 16px;
+		flex-direction: row;
+		justify-content: center;
+		/*background-color: red;*/
+		gap: 10px;
 
-	.ItemBox2 {
-		border: 3px;
-		border-color: rgb(0, 7, 33);
-		background: rgb(0, 39, 167, 0.45);
-		border-radius: 10px;
-		position: absolute;
-		height: 100px;
-		width: 100px;
-		bottom: 5px;
-		left: 110px;
-		padding: 1px;
-		font-size: 25px;
-		font-family: Poppins;
-		color: #000000;
-	}
+		> .slot {
+			width: 96px;
+			height: 96px;
+			border-radius: 10px;
+			background-color: rgba(41, 55, 49, 0.7);
+			border-color: rgb(23, 31, 27, 0.5);
+			border-width: 3px;
+		}
 
-	.ItemBox3 {
-		border: 3px;
-		border-color: rgb(0, 7, 33);
-		background: rgb(0, 39, 167, 0.45);
-		border-radius: 10px;
-		position: absolute;
-		height: 100px;
-		width: 100px;
-		bottom: 5px;
-		left: 215px;
-		padding: 1px;
-		font-size: 25px;
-		font-family: Poppins;
-		color: #000000;
-	}
-
-	.ItemImage1 {
-		position: absolute;
-		height: 100px;
-		width: 100px;
-		bottom: 5px;
-		left: 5px;
+		> .current-slot {
+			border-color: rgba(41, 55, 49, 1);
+			border-width: 5px;
+		}
 	}
 }

@@ -3,19 +3,25 @@
 @inherits PanelComponent
 
 <root>
-    <div class="ItemBox1"><p>1</p></div>
-    <div class="ItemBox2"><p>2</p></div>
-    <div class="ItemBox3"><p>3</p></div>
-    <div class="ItemImage1"><img src="Textures/iron.png" style="width:100px;height:100px;"></div>
+    <div class="main">
+        @for (int slot = 0; slot < 4; slot++)
+        {
+            <div class="slot @((currentSlot == slot) ? "current-slot" : "")">
+                @if (slot < playerInventory.Inventory.Count)
+                {
+                    Item item = playerInventory.Inventory[slot];
+
+                    <img src=@(item.ImagePath)></img>
+                }
+            </div>
+        }
+    </div>
 </root>
 
 @code
 {
+    private int currentSlot = 1;
+    [Property] public PlayerInventory playerInventory;
 
-	[Property, TextArea] public string MyStringValue { get; set; } = "Hello World!";
-
-	/// <summary>
-	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
-	/// </summary>
-	protected override int BuildHash() => System.HashCode.Combine( MyStringValue );
+    protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());
 }

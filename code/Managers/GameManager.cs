@@ -114,6 +114,6 @@ public sealed class GameManager : Component, Component.INetworkListener
 	[Broadcast]
 	private void DeleteLobby()
 	{
-		LobbyObject.Enabled = false;
+		LobbyObject.Destroy();
 	}
 }

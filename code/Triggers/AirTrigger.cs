@@ -7,6 +7,8 @@ public sealed class AirTrigger : Component, Component.ITriggerListener
 
 	public void OnTriggerEnter( Collider other )
 	{
+		Log.Info( other );
+
 		PlayerMovement player = other.GameObject.Components.Get<PlayerMovement>();
 
 		if ( player is null )

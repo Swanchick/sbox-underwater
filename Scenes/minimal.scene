@@ -211,6 +211,65 @@
           "toParent": null
         }
       ]
+    },
+    {
+      "Id": "6e23f212-6b6c-4f61-a9c6-c8326de908cd",
+      "Name": "TestItem",
+      "Position": "-1805.735,-51.07482,593.241",
+      "Scale": "0.5,0.5,0.5",
+      "Networked": true,
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        },
+        {
+          "__type": "Rigidbody",
+          "AngularDamping": 0,
+          "Gravity": true,
+          "LinearDamping": 0,
+          "Locking": {},
+          "MassOverride": 0,
+          "RigidbodyFlags": 0,
+          "StartAsleep": false
+        },
+        {
+          "__type": "Item",
+          "ImagePath": "/Textures/Items/iron.png"
+        }
+      ]
+    },
+    {
+      "Id": "9e97faeb-d808-4b23-a253-1380f62cce9e",
+      "Name": "Cube",
+      "Position": "-1643.224,-178.8899,414.2791",
+      "Scale": "0.1,0.1,0.7",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -236,6 +295,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-28T22:34:21.3287646\u002B02:00",
+  "LastSaved": "2024-02-29T17:53:39.4648327\u002B02:00",
   "__references": []
 }
