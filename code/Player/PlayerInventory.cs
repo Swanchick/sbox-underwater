@@ -32,6 +32,7 @@ public class PlayerInventory : Component
 		}
 	}
 
+	[Broadcast]
 	public virtual void Drop()
 	{
 		Item item = GetItem( (int)currentSlot );

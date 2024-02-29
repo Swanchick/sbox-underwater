@@ -2,35 +2,33 @@
 
 public sealed class AirTrigger : Component, Component.ITriggerListener
 {
-	[Property] public bool canParentPlayer = false;
+	[Property] public bool canParent = false;
 	[Property] public GameObject toParent;
 
 	public void OnTriggerEnter( Collider other )
 	{
-		Log.Info( other );
+		IAir air = other.GameObject.Components.Get<IAir>();
 
-		PlayerMovement player = other.GameObject.Components.Get<PlayerMovement>();
-
-		if ( player is null )
+		if ( air is null )
 			return;
 
-		if ( canParentPlayer )
+		if ( canParent )
 		{
-			player.EnteredIntoAirTrigger( GameObject, toParent );
+			air.OnAirEnterWithParent( GameObject, toParent );
 		}
 		else
 		{
-			player.EnteredIntoAirTrigger( GameObject );
+			air.OnAirEnter( GameObject );
 		}
 	}
 
 	public void OnTriggerExit( Collider other )
 	{
-		PlayerMovement player = other.GameObject.Components.Get<PlayerMovement>();
+		IAir air = other.GameObject.Components.Get<IAir>();
 
-		if ( player is null )
+		if ( air is null )
 			return;
 
-		player.LeftAirTrigger( GameObject );
+		air.OnAirLeave( GameObject );
 	}
 }

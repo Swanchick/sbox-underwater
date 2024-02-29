@@ -144,7 +144,7 @@
         },
         {
           "__type": "AirTrigger",
-          "canParentPlayer": false,
+          "canParent": false,
           "toParent": null
         }
       ]
@@ -165,7 +165,7 @@
         },
         {
           "__type": "AirTrigger",
-          "canParentPlayer": false,
+          "canParent": false,
           "toParent": null
         }
       ]
@@ -186,7 +186,7 @@
         },
         {
           "__type": "AirTrigger",
-          "canParentPlayer": false,
+          "canParent": false,
           "toParent": null
         }
       ]
@@ -207,7 +207,7 @@
         },
         {
           "__type": "AirTrigger",
-          "canParentPlayer": false,
+          "canParent": false,
           "toParent": null
         }
       ]
@@ -215,7 +215,7 @@
     {
       "Id": "6e23f212-6b6c-4f61-a9c6-c8326de908cd",
       "Name": "TestItem",
-      "Position": "-1805.735,-51.07482,593.241",
+      "Position": "-1805.735,-51.07482,454.163",
       "Scale": "0.5,0.5,0.5",
       "Tags": "item",
       "Networked": true,
@@ -296,6 +296,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-02-29T21:38:17.8297521\u002B02:00",
+  "LastSaved": "2024-02-29T22:47:16.3001696\u002B02:00",
   "__references": []
 }

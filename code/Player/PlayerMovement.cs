@@ -10,7 +10,7 @@ public enum PlayerStates
 	Swim
 }
 
-public sealed class PlayerMovement : Component
+public sealed class PlayerMovement : Component, IAir
 {
 	// Movement properties
 	[Property] public float playerWalkSpeed = 100f;
@@ -42,7 +42,7 @@ public sealed class PlayerMovement : Component
 	private float defaultPlayerHeadHeight;
 	private float defaultPlayerHeight;
 
-	private List<GameObject> airTriggers = new();
+	public List<GameObject> AirTrigger { get; private set; } = new();
 
 	[Sync] public Rotation bodyRotation { get; set; }
 	[Sync] public Vector3 wishDir { get; set; }
@@ -51,6 +51,7 @@ public sealed class PlayerMovement : Component
 	[Sync] public float currentSpeed { get; set; }
 	[Sync] public float currentFriction { get; set; }
 	[Sync] public CitizenAnimationHelper.MoveStyles currentMoveStyle { get; set; }
+	List<GameObject> IAir.AirTrigger { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 	protected override void OnStart()
 	{
@@ -169,32 +170,32 @@ public sealed class PlayerMovement : Component
 		return trace.Hit && playerStates == PlayerStates.Crouch;
 	}
 
-	public void EnteredIntoAirTrigger( GameObject trigger )
+	public void OnAirEnter( GameObject trigger )
 	{
-		if ( airTriggers.Contains( trigger ) )
+		if ( AirTrigger.Contains( trigger ) )
 			return;
-		
-		airTriggers.Add( trigger );
+
+		AirTrigger.Add( trigger );
 
 		playerStates = PlayerStates.Walk;
 	}
 
-	public void EnteredIntoAirTrigger( GameObject trigger, GameObject parent )
-	{	
-		EnteredIntoAirTrigger( trigger );
+	public void OnAirEnterWithParent( GameObject trigger, GameObject parent )
+	{
+		OnAirEnter( trigger );
 
 		Vector3 position = Transform.Position;
 		GameObject.SetParent( parent, true );
 	}
 
-	public void LeftAirTrigger(GameObject trigger)
+	public void OnAirLeave( GameObject trigger )
 	{
-		if ( !airTriggers.Contains( trigger ) )
+		if ( !AirTrigger.Contains( trigger ) )
 			return;
 
-		airTriggers.Remove( trigger );
+		AirTrigger.Remove( trigger );
 
-		if ( airTriggers.Count != 0 )
+		if ( AirTrigger.Count != 0 )
 			return;
 
 		GameObject.SetParent( null, true );
