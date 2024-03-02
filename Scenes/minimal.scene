@@ -201,6 +201,138 @@
       ]
     },
     {
+      "Id": "f00d7b96-3a2b-44ca-8ac5-ad942c40cc75",
+      "Name": "TestItem (1)",
+      "Position": "-1849.399,-51.07482,454.163",
+      "Scale": "0.5,0.5,0.5",
+      "Tags": "item",
+      "Networked": true,
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        },
+        {
+          "__type": "Rigidbody",
+          "AngularDamping": 0,
+          "Gravity": true,
+          "LinearDamping": 0,
+          "Locking": {},
+          "MassOverride": 0,
+          "RigidbodyFlags": 0,
+          "StartAsleep": false
+        },
+        {
+          "__type": "Item",
+          "ImagePath": "/Textures/Items/iron.png",
+          "WaterFriction": 2,
+          "WaveHieght": 10
+        }
+      ]
+    },
+    {
+      "Id": "f699af18-348f-4d72-83b5-afb9e81bcf03",
+      "Name": "TestItem (2)",
+      "Position": "-1894.559,-51.07482,454.163",
+      "Scale": "0.5,0.5,0.5",
+      "Tags": "item",
+      "Networked": true,
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        },
+        {
+          "__type": "Rigidbody",
+          "AngularDamping": 0,
+          "Gravity": true,
+          "LinearDamping": 0,
+          "Locking": {},
+          "MassOverride": 0,
+          "RigidbodyFlags": 0,
+          "StartAsleep": false
+        },
+        {
+          "__type": "Item",
+          "ImagePath": "/Textures/Items/iron.png",
+          "WaterFriction": 2,
+          "WaveHieght": 10
+        }
+      ]
+    },
+    {
+      "Id": "da317234-8975-44a4-a220-da2d16e535e3",
+      "Name": "TestItem (3)",
+      "Position": "-1941.684,-51.07482,454.163",
+      "Scale": "0.5,0.5,0.5",
+      "Tags": "item",
+      "Networked": true,
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        },
+        {
+          "__type": "Rigidbody",
+          "AngularDamping": 0,
+          "Gravity": true,
+          "LinearDamping": 0,
+          "Locking": {},
+          "MassOverride": 0,
+          "RigidbodyFlags": 0,
+          "StartAsleep": false
+        },
+        {
+          "__type": "Item",
+          "ImagePath": "/Textures/Items/iron.png",
+          "WaterFriction": 2,
+          "WaveHieght": 10
+        }
+      ]
+    },
+    {
       "Id": "9e97faeb-d808-4b23-a253-1380f62cce9e",
       "Name": "Cube",
       "Position": "-1643.224,-178.8899,414.2791",
@@ -242,6 +374,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-03-02T19:59:52.2582698\u002B02:00",
+  "LastSaved": "2024-03-03T00:47:07.2408241\u002B02:00",
   "__references": []
 }

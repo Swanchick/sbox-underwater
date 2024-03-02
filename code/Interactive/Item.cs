@@ -15,6 +15,8 @@ public class Item : BaseInteractive, IAir
 	[Property] public float WaterFriction { get; set; } = 2f;
 	[Property] public float WaveHieght { get; set; } = 10f;
 
+	public int CurrentSlot { get; set; }
+
 	public ItemState CurrentItemState { get; private set; } = ItemState.None;
 
 	[Sync] public bool inTheWater { get; set; } = false;
@@ -32,6 +34,8 @@ public class Item : BaseInteractive, IAir
 		modelRenderer = Components.Get<ModelRenderer>();
 
 		Network.SetOwnerTransfer( OwnerTransfer.Takeover );
+
+		objectToParent = Scene;
 	}
 
 	protected override void OnUpdate()
@@ -62,6 +66,9 @@ public class Item : BaseInteractive, IAir
 
 		GameObject playerObject = FindPlayer( playerId );
 		PlayerInventory inventory = playerObject.Components.Get<PlayerInventory>();
+
+		if ( !inventory.CanTake() )
+			return;
 
 		OnTake( playerId );
 
@@ -106,9 +113,8 @@ public class Item : BaseInteractive, IAir
 			return;
 
 		CurrentItemState = ItemState.None;
-
 		IsInteractive = true;
-		
+
 		MakeItemForSlot( true );
 
 		Transform.Rotation = Rotation.Identity;
@@ -168,7 +174,7 @@ public class Item : BaseInteractive, IAir
 			return;
 
 		objectToParent = Scene;
-		GameObject.SetParent( Scene, true );
+		GameObject.SetParent( objectToParent );
 
 		if ( rigidbody is null )
 			return;

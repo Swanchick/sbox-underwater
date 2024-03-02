@@ -8,19 +8,31 @@ public class PlayerInventory : Component
 
 	[Property] public float ThrowPower = 250f;
 
-	public NetList<Item> Inventory { get; set; } = new();
+	public NetDictionary<int, Item> Inventory { get; set; } = new();
 	public int MaxSlots { get; set; } = 4;
 
-	public Action<NetList<Item>> OnItemAdded;
+	public Action<NetDictionary<int, Item>> OnItemAdded;
 	public Action<int> OnSlotChanged;
 
 	private float currentSlot = 0;
 	
+	public virtual bool CanTake()
+	{
+		Item item;
+		Inventory.TryGetValue( (int)currentSlot, out item );
+
+		return Inventory.Count <= MaxSlots && item is null;
+	}
+
 	public virtual void Take(Item item, GameObject itemObject)
 	{
 		itemObject.Network.TakeOwnership();
 
-		Inventory.Add( item );
+		int slot = (int)currentSlot;
+
+		Inventory[slot] = item;
+		item.CurrentSlot = slot;
+
 		OnItemAdded?.Invoke( Inventory );
 
 		if ((int)currentSlot == Inventory.Count - 1 )
@@ -35,13 +47,14 @@ public class PlayerInventory : Component
 		if ( item is null )
 			return;
 
-		Inventory.Remove( item );
+		item.CurrentSlot = -100;
+		Inventory.Remove( (int)currentSlot );
 		OnItemAdded?.Invoke( Inventory );
 
+		item.Drop( playerCamera.Transform.Position, playerCamera.Transform.Rotation.Forward, ThrowPower );
+		
 		GameObject itemObject = item.GameObject;
 		itemObject.Network.DropOwnership();
-
-		item.Drop( playerCamera.Transform.Position, playerCamera.Transform.Rotation.Forward, ThrowPower );
 	}
 
 	protected override void OnUpdate()
@@ -60,30 +73,45 @@ public class PlayerInventory : Component
 		{
 			Drop();
 		}
+
+		if ( Input.Pressed( "Score" ) )
+		{
+			foreach (Item item in Inventory.Values )
+			{
+				Log.Info( item );
+			}
+		}
 	}
 
 	private void SetCurrentItem(int slot)
 	{
-		foreach (Item _item in Inventory )
+		foreach (Item _item in Inventory.Values )
 		{
+			if ( !_item.IsValid() )
+				continue;
+			
 			_item.MakeDeactivateItem();
 		}
 
 		if ( slot > Inventory.Count - 1 )
 			return;
 
-		Item item = Inventory[slot];
-		item.MakeActivateItem();
+		Item item = GetItem(slot);
+		if ( item is null )
+			return;
 
-		Log.Info( "Item changed" );
+		item.MakeActivateItem();
 	}
 	
 	private Item GetItem(int slot)
 	{
-		if ( slot > Inventory.Count - 1 )
-			return null;
+		foreach ( Item item in Inventory.Values )
+		{
+			if (item.CurrentSlot == slot)
+				return item;
+		}
 
-		return Inventory[slot];
+		return null;
 	}
 
 	private void ChangeSlot()

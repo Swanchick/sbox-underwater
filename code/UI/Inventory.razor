@@ -6,11 +6,13 @@
     <div class="main">
         @for (int slot = 0; slot < playerInventory.MaxSlots; slot++)
         {
-            <div class="slot @(currentSlot == slot ? "current-slot" : "")">
-                @if (slot < inventory.Count)
-                {
-                    Item item = inventory[slot];
+            Item item;
+            playerInventory.Inventory.TryGetValue(slot, out item);
 
+            <div class="slot @(currentSlot == slot ? "current-slot" : "")">
+                
+                @if (item is not null)
+                {
                     <img src=@(item.ImagePath)></img>
                 }
             </div>
@@ -22,7 +24,7 @@
 {
     [Property] public PlayerInventory playerInventory;
 
-    private NetList<Item> inventory = new();
+    private NetDictionary<int, Item> inventory = new();
     private int currentSlot = 0;
 
     protected override void OnStart()
@@ -31,7 +33,7 @@
         playerInventory.OnSlotChanged += OnSlotChanged;
     }
 
-    private void OnItemAdded(NetList<Item> items)
+    private void OnItemAdded(NetDictionary<int, Item> items)
     {
         inventory = items;
 
