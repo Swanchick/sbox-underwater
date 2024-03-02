@@ -195,7 +195,8 @@
         {
           "__type": "Item",
           "ImagePath": "/Textures/Items/iron.png",
-          "waterFriction": 2
+          "WaterFriction": 2,
+          "WaveHieght": 10
         }
       ]
     },
@@ -241,6 +242,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-03-02T14:20:08.1355601\u002B02:00",
+  "LastSaved": "2024-03-02T19:19:46.7837245\u002B02:00",
   "__references": []
 }

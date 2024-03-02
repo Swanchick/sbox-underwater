@@ -12,7 +12,8 @@ public class Item : BaseInteractive, IAir
 {
 	[Property] public string ImagePath { get; set; } = "/Textures/Items/iron.png";
 
-	[Property] public float waterFriction { get; set; } = 2f;
+	[Property] public float WaterFriction { get; set; } = 2f;
+	[Property] public float WaveHieght { get; set; } = 10f;
 
 	public ItemState CurrentItemState { get; private set; } = ItemState.None;
 
@@ -43,8 +44,9 @@ public class Item : BaseInteractive, IAir
 		if ( !inTheWater )
 			return;
 
-		rigidbody.Velocity = Vector3.Lerp( rigidbody.Velocity, Vector3.Zero, Time.Delta * waterFriction );
-		rigidbody.AngularVelocity = Vector3.Lerp( rigidbody.AngularVelocity, Vector3.Zero, Time.Delta * waterFriction );
+		rigidbody.Velocity = Vector3.Lerp( rigidbody.Velocity, Vector3.Zero, Time.Delta * WaterFriction );
+		rigidbody.Velocity = rigidbody.Velocity.WithZ(rigidbody.Velocity.z + (float)Math.Sin( Time.Now ) * WaveHieght * Time.Delta);
+		rigidbody.AngularVelocity = Vector3.Lerp( rigidbody.AngularVelocity, Vector3.Zero, Time.Delta * WaterFriction );
 	}
 
 	protected virtual void MakeItemForSlot(bool pleaseDontMake)

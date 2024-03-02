@@ -21,7 +21,5 @@ public sealed class PlayerManager : Component
 		{
 			PlayerHUD.Destroy();
 		}
-
-		PlayerHUD.Enabled = true;
 	}
 }
