@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using System;
 
 public sealed class PlayerInteract : Component
 {
@@ -6,8 +7,12 @@ public sealed class PlayerInteract : Component
 	[Property] public GameObject playerCamera;
 
 	private PlayerManager playerManager;
-
 	private SoundPointComponent playerInteractSound;
+
+	public Action OnItemFound;
+	public Action OnItemLost;
+
+	private bool crosshairActive = false;
 
 	protected override void OnStart()
 	{
@@ -20,12 +25,32 @@ public sealed class PlayerInteract : Component
 		Interact();
 	}
 
+	private void CrosshairState( bool hit, bool isInteractive )
+	{
+		if ( !hit )
+		{
+			if ( crosshairActive )
+			{
+				crosshairActive = false;
+
+				OnItemLost?.Invoke();
+			}
+
+			return;
+		}
+
+
+		if ( isInteractive && !crosshairActive )
+		{
+			crosshairActive = true;
+
+			OnItemFound?.Invoke();
+		}
+	}
+
 	private void Interact()
 	{
 		if ( IsProxy )
-			return;
-
-		if ( !Input.Pressed( "use" ) )
 			return;
 
 		Vector3 cameraPosition = playerCamera.Transform.Position;
@@ -37,20 +62,29 @@ public sealed class PlayerInteract : Component
 
 		if ( !trace.Hit )
 		{
+			CrosshairState( false, false );
+
 			return;
 		}
-
-		playerInteractSound.StopSound();
-		playerInteractSound.StartSound();
 
 		GameObject gameObject = trace.GameObject;
 		IInteractive interactive = gameObject.Components.Get<IInteractive>();
 
+		CrosshairState( interactive is not null, false);
+
 		if ( interactive is null )
 			return;
 
+		CrosshairState( true, interactive.IsInteractive );
+
 		if ( !interactive.IsInteractive )
 			return;
+
+		if ( !Input.Pressed( "use" ) )
+			return;
+
+		playerInteractSound.StopSound();
+		playerInteractSound.StartSound();
 
 		interactive.OnInteract( GameObject.Id );
 	}

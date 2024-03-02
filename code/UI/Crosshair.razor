@@ -3,4 +3,43 @@
 @inherits PanelComponent
 
 <root>
+    <img src="@currentCrosshair" />
 </root>
+
+
+@code 
+{
+    [Property] public PlayerInteract playerInteract;
+
+    [Property] public string DefaultCrosshair = "Textures/UI/Crosshair.png";
+    [Property] public string ActiveCrosshair = "Textures/UI/Hand.png";
+
+
+    private string currentCrosshair;
+
+    protected override void OnStart()
+    {
+        currentCrosshair = DefaultCrosshair;
+
+        playerInteract.OnItemFound += CrosshairActive;
+        playerInteract.OnItemLost += CrosshairNotactive;
+    }
+
+    private void CrosshairActive()
+    {
+        Log.Info("Hello World");
+
+        currentCrosshair = ActiveCrosshair;
+
+        StateHasChanged();
+    }
+
+    private void CrosshairNotactive()
+    {
+        Log.Info("Bye World");
+
+        currentCrosshair = DefaultCrosshair;
+
+        StateHasChanged();
+    }
+}
