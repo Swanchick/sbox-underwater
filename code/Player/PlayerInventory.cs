@@ -8,22 +8,19 @@ public class PlayerInventory : Component
 
 	[Property] public float ThrowPower = 250f;
 
-	public List<Item> Inventory { get; set; } = new();
+	public NetList<Item> Inventory { get; set; } = new();
 	public int MaxSlots { get; set; } = 4;
 
-	public Action<List<Item>> OnItemAdded;
+	public Action<NetList<Item>> OnItemAdded;
 	public Action<int> OnSlotChanged;
 
 	private float currentSlot = 0;
 	
-	public virtual void Take(Item item)
+	public virtual void Take(Item item, GameObject itemObject)
 	{
-		GameObject itemObject = item.GameObject;
 		itemObject.Network.TakeOwnership();
-		itemObject.Parent = inventoryStorage;
-		itemObject.Transform.LocalPosition = Vector3.Zero;
 
-		Inventory.Add(item);
+		Inventory.Add( item );
 		OnItemAdded?.Invoke( Inventory );
 
 		if ((int)currentSlot == Inventory.Count - 1 )
@@ -32,7 +29,6 @@ public class PlayerInventory : Component
 		}
 	}
 
-	[Broadcast]
 	public virtual void Drop()
 	{
 		Item item = GetItem( (int)currentSlot );
@@ -42,11 +38,10 @@ public class PlayerInventory : Component
 		Inventory.Remove( item );
 		OnItemAdded?.Invoke( Inventory );
 
-		item.Drop(playerCamera.Transform.Rotation.Forward, ThrowPower);
-
 		GameObject itemObject = item.GameObject;
-		itemObject.SetParent( Scene );
-		itemObject.Transform.Position = playerCamera.Transform.Position;
+		itemObject.Network.DropOwnership();
+
+		item.Drop( playerCamera.Transform.Position, playerCamera.Transform.Rotation.Forward, ThrowPower );
 	}
 
 	protected override void OnUpdate()
@@ -71,14 +66,14 @@ public class PlayerInventory : Component
 	{
 		foreach (Item _item in Inventory )
 		{
-			_item.IsCurrentItem = false;
+			_item.MakeDeactivateItem();
 		}
 
 		if ( slot > Inventory.Count - 1 )
 			return;
 
 		Item item = Inventory[slot];
-		item.IsCurrentItem = true;
+		item.MakeActivateItem();
 
 		Log.Info( "Item changed" );
 	}

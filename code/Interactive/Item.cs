@@ -1,59 +1,40 @@
 ﻿using Sandbox;
 using System;
-using System.Runtime.InteropServices;
+
+public enum ItemState
+{
+	None,
+	Inventory,
+	Active
+}
 
 public class Item : BaseInteractive, IAir
 {
 	[Property] public string ImagePath { get; set; } = "/Textures/Items/iron.png";
 
-	protected virtual bool IsInInventory { get; set; } = false;
-	public bool IsCurrentItem { get; set; } = false;
-	public List<GameObject> AirTrigger { get; set; } = new();
+	[Property] public float waterFriction { get; set; } = 2f;
+
+	public ItemState CurrentItemState { get; private set; } = ItemState.None;
 
 	[Sync] public bool inTheWater { get; set; } = false;
 
-	private Rigidbody rigidBody;
-	private BoxCollider collider;
+	public List<GameObject> AirTrigger { get; set; } = new();
+
+	private GameObject objectToParent;
+	
+	private Rigidbody rigidbody;
 	private ModelRenderer modelRenderer;
 
 	protected override void OnStart()
 	{
-		rigidBody = Components.Get<Rigidbody>();
-		collider = Components.Get<BoxCollider>();
+		rigidbody = Components.Get<Rigidbody>();
 		modelRenderer = Components.Get<ModelRenderer>();
 
 		Network.SetOwnerTransfer( OwnerTransfer.Takeover );
 	}
 
-	protected virtual void MakeItemForSlot(bool pleaseDontMake)
-	{
-		rigidBody.Gravity = pleaseDontMake;
-		// collider.Enabled = pleaseDontMake;
-		modelRenderer.Enabled = pleaseDontMake;
-	}
-
-	protected virtual void OnTake(Guid playerId)
-	{
-		if ( IsInInventory )
-			return;
-		
-		GameObject playerObject = FindPlayer( playerId );
-		PlayerInventory inventory = playerObject.Components.Get<PlayerInventory>();
-
-		MakeItemForSlot(false);
-
-		IsInInventory = true;
-		IsInteractive = false;
-
-		rigidBody.Velocity = Vector3.Zero;
-		inventory.Take( this );
-	}
-
 	protected override void OnUpdate()
 	{
-		if ( IsProxy )
-			return;
-
 		MoveInWater();
 	}
 
@@ -62,41 +43,83 @@ public class Item : BaseInteractive, IAir
 		if ( !inTheWater )
 			return;
 
-		rigidBody.Velocity = Vector3.Lerp( rigidBody.Velocity, Vector3.Zero, Time.Delta * 2f );
-		rigidBody.AngularVelocity = Vector3.Lerp( rigidBody.AngularVelocity, Vector3.Zero, Time.Delta * 2f );
-
+		rigidbody.Velocity = Vector3.Lerp( rigidbody.Velocity, Vector3.Zero, Time.Delta * waterFriction );
+		rigidbody.AngularVelocity = Vector3.Lerp( rigidbody.AngularVelocity, Vector3.Zero, Time.Delta * waterFriction );
 	}
 
-	[Broadcast]
-	public virtual void Drop(Vector3 forward, float throwPower)
-	{	
-		if ( !IsInInventory )
-			return;
-
-		IsInInventory = false;
-		IsCurrentItem = false;
-
-		IsInteractive = true;
-		MakeItemForSlot( true );
-		Network.DropOwnership();
-
-		rigidBody.Velocity = forward * throwPower;
-
-		rigidBody.Gravity = !inTheWater;
+	protected virtual void MakeItemForSlot(bool pleaseDontMake)
+	{
+		rigidbody.Gravity = pleaseDontMake;
+		modelRenderer.Enabled = pleaseDontMake;
 	}
 
-	[Broadcast]
 	public override void OnInteract( Guid playerId )
 	{
-		OnTake(playerId);
+		if ( CurrentItemState != ItemState.None )
+			return;
+
+		GameObject playerObject = FindPlayer( playerId );
+		PlayerInventory inventory = playerObject.Components.Get<PlayerInventory>();
+
+		OnTake( playerId );
+
+		inventory.Take( this, GameObject );
 	}
 
 	[Broadcast]
-	public void OnAirEnter( GameObject trigger )
+	public virtual void MakeActivateItem()
 	{
-		if ( IsInInventory )
+		CurrentItemState = ItemState.Active;
+
+		OnActivate();
+	}
+
+	[Broadcast]
+	public virtual void MakeDeactivateItem()
+	{
+		CurrentItemState = ItemState.Inventory;
+
+		OnDeactivate();
+	}
+
+	protected virtual void OnActivate() { }
+
+	protected virtual void OnDeactivate() { }
+
+	[Broadcast]
+	protected virtual void OnTake(Guid playerId)
+	{
+		GameObject playerObject = FindPlayer( playerId );
+
+		MakeItemForSlot( false );
+
+		IsInteractive = false;
+		GameObject.SetParent( playerObject, false );
+	}
+
+	[Broadcast]
+	public virtual void Drop(Vector3 cameraPos, Vector3 forward, float throwPower)
+	{	
+		if ( CurrentItemState == ItemState.None )
 			return;
 
+		CurrentItemState = ItemState.None;
+
+		IsInteractive = true;
+		
+		MakeItemForSlot( true );
+
+		Transform.Rotation = Rotation.Identity;
+
+		GameObject.SetParent( objectToParent );
+		Transform.Position = cameraPos;
+		rigidbody.Velocity = forward * throwPower;
+
+		rigidbody.Gravity = !inTheWater;
+	}
+
+	public void OnAirEnter( GameObject trigger )
+	{
 		if ( AirTrigger.Contains( trigger ) )
 			return;
 
@@ -104,25 +127,29 @@ public class Item : BaseInteractive, IAir
 
 		inTheWater = false;
 
-		if ( IsInInventory )
+		if ( CurrentItemState != ItemState.None )
 			return;
 
+		if ( rigidbody is null )
+			return;
 
-		rigidBody.Gravity = true;
+		rigidbody.Gravity = true;
 	}
 
-	[Broadcast]
 	public void OnAirEnterWithParent( GameObject trigger, GameObject parent )
 	{
 		OnAirEnter( trigger );
 
-		if ( IsInInventory )
+		if (CurrentItemState != ItemState.None )
+		{
+			objectToParent = parent;
+
 			return;
+		}
 
 		GameObject.SetParent( parent, true );
 	}
 
-	[Broadcast]
 	public void OnAirLeave( GameObject trigger )
 	{
 		if ( !AirTrigger.Contains( trigger ) )
@@ -135,11 +162,15 @@ public class Item : BaseInteractive, IAir
 
 		inTheWater = true;
 
-		if ( IsInInventory )
+		if ( CurrentItemState != ItemState.None )
 			return;
 
-		rigidBody.Gravity = false;
+		objectToParent = Scene;
+		GameObject.SetParent( Scene, true );
 
-		GameObject.SetParent( null, true );
+		if ( rigidbody is null )
+			return;
+
+		rigidbody.Gravity = false;
 	}
 }

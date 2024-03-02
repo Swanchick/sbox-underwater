@@ -22,7 +22,7 @@
 {
     [Property] public PlayerInventory playerInventory;
 
-    private List<Item> inventory = new();
+    private NetList<Item> inventory = new();
     private int currentSlot = 0;
 
     protected override void OnStart()
@@ -31,7 +31,7 @@
         playerInventory.OnSlotChanged += OnSlotChanged;
     }
 
-    private void OnItemAdded(List<Item> items)
+    private void OnItemAdded(NetList<Item> items)
     {
         inventory = items;
 

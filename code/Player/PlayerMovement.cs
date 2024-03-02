@@ -198,7 +198,7 @@ public sealed class PlayerMovement : Component, IAir
 		if ( AirTrigger.Count != 0 )
 			return;
 
-		GameObject.SetParent( null, true );
+		GameObject.SetParent( Scene, true );
 
 		playerStates = PlayerStates.Swim;
 	}
@@ -332,6 +332,7 @@ public sealed class PlayerMovement : Component, IAir
 	{
 		animationHelper.WithWishVelocity( wishDir );
 		animationHelper.WithVelocity( playerController.Velocity );
+		animationHelper.AimAngle = playerCamera.Transform.Rotation;
 		animationHelper.IsGrounded = playerController.IsOnGround && playerStates != PlayerStates.Swim;
 		animationHelper.IsSwimming = playerStates == PlayerStates.Swim;
 		animationHelper.MoveStyle = currentMoveStyle;
