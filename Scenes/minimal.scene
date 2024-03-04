@@ -8,6 +8,24 @@
       "Enabled": true
     },
     {
+      "Id": "464404a0-7872-416d-b564-cd7144c1d410",
+      "Name": "Water",
+      "Position": "-1248,-279.5288,384",
+      "Scale": "5.77784,6.090902,1",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": "materials/tool_water.vmat",
+          "Model": "models/dev/plane.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    },
+    {
       "Id": "d8b46b61-9151-4c18-b500-b5fe904a3e4d",
       "Name": "Spawnpoint (1)",
       "Position": "1792,256,384",
@@ -138,7 +156,8 @@
     {
       "Id": "d0aa959b-e0dc-41b3-8320-00231f5fe8c1",
       "Name": "Object (1)",
-      "Position": "-1280,-256,400",
+      "Position": "-1280,-256,395.8871",
+      "Scale": "1.117384,1,1",
       "Enabled": true,
       "Components": [
         {
@@ -402,6 +421,71 @@
           ]
         }
       ]
+    },
+    {
+      "Id": "50c7bab5-77e7-43ea-b0c7-bd713b59dcbd",
+      "Name": "w_usp",
+      "Position": "-1830.442,-190.7452,400.7631",
+      "Networked": true,
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelCollider",
+          "IsTrigger": false,
+          "Model": "models/weapons/sbox_pistol_usp/w_usp.vmdl",
+          "Static": false,
+          "Surface": null
+        },
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 9493,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/weapons/sbox_pistol_usp/w_usp.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "Rigidbody",
+          "AngularDamping": 0,
+          "Gravity": true,
+          "LinearDamping": 0,
+          "Locking": {},
+          "MassOverride": 0,
+          "RigidbodyFlags": 0,
+          "StartAsleep": false
+        },
+        {
+          "__type": "Pistol",
+          "ViewModel": {
+            "_type": "gameobject",
+            "go": "3e46a4b7-c9c6-44d1-905c-a2a737737099"
+          },
+          "ImagePath": "/Textures/Items/iron.png",
+          "WaterFriction": 2,
+          "WaveHieght": 10,
+          "WeaponName": "Pistol"
+        }
+      ],
+      "Children": [
+        {
+          "Id": "3e46a4b7-c9c6-44d1-905c-a2a737737099",
+          "Name": "v_usp",
+          "Position": "0,0,0",
+          "Scale": "0.5,0.5,0.5",
+          "Components": [
+            {
+              "__type": "ModelRenderer",
+              "BodyGroups": 17685,
+              "MaterialGroup": null,
+              "MaterialOverride": null,
+              "Model": "weapons/rust_pistol/v_rust_pistol.vmdl",
+              "RenderType": "Off",
+              "Tint": "1,1,1,1"
+            }
+          ]
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -427,8 +511,11 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-03-04T23:47:12.6990524\u002B02:00",
+  "LastSaved": "2024-03-05T00:39:29.4104926\u002B02:00",
   "__references": [
-    "greg.flashlightcs"
+    "facepunch.w_usp",
+    "greg.flashlightcs",
+    "loli.tool_water",
+    "rust.v_rust_pistol"
   ]
 }

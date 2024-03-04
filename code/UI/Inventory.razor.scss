@@ -6,6 +6,8 @@ Inventory {
 	bottom: 0;
 	pointer-events: none;
 
+	z-index: -10;
+
 	.main {
 		position: absolute;
 		width: 100%;

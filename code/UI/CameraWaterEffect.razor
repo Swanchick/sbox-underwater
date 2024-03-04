@@ -1,0 +1,49 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@implements IAir
+
+<root>
+	<div class="@(inWater ? "water" : "")">
+        Hello World
+    </div>
+</root>
+
+@code
+{
+    public List<GameObject> AirTrigger { get; set; } = new();
+
+    private bool inWater = true;
+
+    public void OnAirEnter(GameObject trigger)
+    {
+        AirTrigger.Add( trigger );
+
+        inWater = false;
+
+        StateHasChanged();
+    }
+
+    public void OnAirEnterWithParent(GameObject trigger, GameObject parent)
+    {
+        OnAirEnter(trigger);
+    }
+
+    public void OnAirLeave(GameObject trigger)
+    {
+        AirTrigger.Remove( trigger );
+
+        if (AirTrigger.Count != 0)
+        {
+            return;
+        }
+
+        inWater = true;
+
+        StateHasChanged();
+
+        Log.Info( "Camera leaved an air" );
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());
+}

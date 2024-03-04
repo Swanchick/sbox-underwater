@@ -52,7 +52,8 @@ public class PlayerInventory : Component
 		OnItemAdded?.Invoke( Inventory );
 
 		item.Drop( playerCamera.Transform.Position, playerCamera.Transform.Rotation.Forward, ThrowPower );
-		
+
+
 		GameObject itemObject = item.GameObject;
 		itemObject.Network.DropOwnership();
 	}
@@ -137,14 +138,8 @@ public class PlayerInventory : Component
 	{
 		foreach (Item _item in Inventory.Values )
 		{
-			if ( !_item.IsValid() )
-				continue;
-			
 			_item.MakeDeactivateItem();
 		}
-
-		if ( slot > Inventory.Count - 1 )
-			return;
 
 		Item item = GetItem(slot);
 		if ( item is null )
@@ -171,7 +166,7 @@ public class PlayerInventory : Component
 
 		float newSlot = currentSlot;
 
-		newSlot -= Input.MouseWheel.y * 0.5f;
+		newSlot -= Input.MouseWheel.y * 0.6f;
 		newSlot = Math.Clamp( newSlot, 0, MaxSlots - 1 );
 
 		if ( newSlot != currentSlot )
@@ -192,6 +187,7 @@ public class PlayerInventory : Component
 		{	
 			if (Input.Pressed($"Slot{slot + 1}" ))
 			{
+				currentSlot = slot;
 				SetCurrentItem( slot );
 				OnSlotChanged?.Invoke(slot);
 			}

@@ -51,6 +51,8 @@ public class Item : BaseInteractive, IAir
 		if ( !inTheWater )
 			return;
 
+		rigidbody.Gravity = !inTheWater;
+
 		rigidbody.Velocity = Vector3.Lerp( rigidbody.Velocity, Vector3.Zero, Time.Delta * WaterFriction );
 		rigidbody.Velocity = rigidbody.Velocity.WithZ(rigidbody.Velocity.z + (float)Math.Sin( Time.Now ) * WaveHieght * Time.Delta);
 		rigidbody.AngularVelocity = Vector3.Lerp( rigidbody.AngularVelocity, Vector3.Zero, Time.Delta * WaterFriction );
@@ -60,20 +62,6 @@ public class Item : BaseInteractive, IAir
 	{
 		rigidbody.Enabled = pleaseDontMake;
 		modelRenderer.Enabled = pleaseDontMake;
-	}
-
-	protected virtual void LockUnlockPhysics(bool _lock )
-	{
-		PhysicsLock physicsLock = rigidbody.Locking;
-		physicsLock.X = _lock;
-		physicsLock.Y = _lock;
-		physicsLock.Z = _lock;
-
-		physicsLock.Pitch = _lock;
-		physicsLock.Yaw = _lock;
-		physicsLock.Roll = _lock;
-
-		rigidbody.Locking = physicsLock;
 	}
 
 	public override void OnInteract( Guid playerId )
@@ -102,12 +90,12 @@ public class Item : BaseInteractive, IAir
 	protected virtual void OnTake( Guid playerId, Guid inventoryId )
 	{
 		GameObject inventoryStorage = FindObject( inventoryId );
-
 		MakeItemForSlot( false );
 
 		IsInteractive = false;
 
-		LockUnlockPhysics( true );
+		CurrentItemState = ItemState.Inventory;
+
 		GameObject.SetParent( inventoryStorage, false );
 	}
 
@@ -117,19 +105,17 @@ public class Item : BaseInteractive, IAir
 		if ( CurrentItemState == ItemState.None )
 			return;
 
+		MakeDeactivateItem();
+
 		CurrentItemState = ItemState.None;
 		IsInteractive = true;
 		GameObject.SetParent( objectToParent );
 
 		MakeItemForSlot( true );
-		LockUnlockPhysics( false );
 
 		Transform.Rotation = Rotation.Identity;
-
 		Transform.Position = cameraPos;
 		rigidbody.Velocity = forward * throwPower;
-
-		rigidbody.Gravity = !inTheWater;
 	}
 
 	[Broadcast]

@@ -127,6 +127,26 @@
         "Name": "PlayerHead",
         "Position": "0,0,63",
         "Enabled": true,
+        "Components": [
+          {
+            "__type": "SphereCollider",
+            "Center": "0,0,0",
+            "IsTrigger": true,
+            "Radius": 5.7,
+            "Static": false,
+            "Surface": null
+          },
+          {
+            "__type": "ScreenPanel",
+            "AutoScreenScale": true,
+            "Opacity": 1,
+            "Scale": 1,
+            "ZIndex": 100
+          },
+          {
+            "__type": "CameraWaterEffect"
+          }
+        ],
         "Children": [
           {
             "Id": "73ed9caf-be63-47ff-98dc-dbae66b3d841",
