@@ -16,7 +16,7 @@ public class PlayerInventory : Component
 
 	private float currentSlot = 0;
 	
-	public virtual bool CanTake()
+	public bool CanTake()
 	{
 		Item item;
 		Inventory.TryGetValue( (int)currentSlot, out item );
@@ -24,7 +24,7 @@ public class PlayerInventory : Component
 		return Inventory.Count <= MaxSlots && item is null;
 	}
 
-	public virtual void Take(Item item, GameObject itemObject)
+	public void Take(Item item, GameObject itemObject)
 	{
 		itemObject.Network.TakeOwnership();
 
@@ -41,7 +41,7 @@ public class PlayerInventory : Component
 		}
 	}
 
-	public virtual void Drop()
+	public void Drop()
 	{
 		Item item = GetItem( (int)currentSlot );
 		if ( item is null )
@@ -74,13 +74,63 @@ public class PlayerInventory : Component
 			Drop();
 		}
 
-		if ( Input.Pressed( "Score" ) )
+		if ( Input.Pressed( "attack1" ) )
 		{
-			foreach (Item item in Inventory.Values )
+			PrimaryFire();
+		}
+
+		if ( Input.Down( "attack1" ) )
+		{
+			PrimaryContinuousFire();
+		}
+
+		if ( Input.Pressed( "attack2" ) )
+		{
+			SecondaryFire();
+		}
+	}
+
+	private BaseWeapon GetWeapon( int slot )
+	{
+		foreach (Item item in Inventory.Values )
+		{
+			if ( item.CurrentSlot != slot )
+				continue;
+			
+			if (item is BaseWeapon )
 			{
-				Log.Info( item );
+				return (BaseWeapon)item;
 			}
 		}
+
+		return null;
+	}
+
+	private void PrimaryFire()
+	{
+		BaseWeapon weapon = GetWeapon( (int)currentSlot );
+		if ( weapon is null )
+			return;
+
+		weapon.PrimaryFire();
+	}
+
+	private void PrimaryContinuousFire()
+	{
+		BaseWeapon weapon = GetWeapon( (int)currentSlot );
+		if ( weapon is null )
+			return;
+
+		weapon.PrimaryContinuousFire();
+	}
+
+	private void SecondaryFire()
+	{
+		BaseWeapon weapon = GetWeapon( (int)currentSlot );
+		if ( weapon is null )
+			return;
+
+		weapon.SecondaryFire();
 	}
 
 	private void SetCurrentItem(int slot)

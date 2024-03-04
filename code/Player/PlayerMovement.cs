@@ -163,7 +163,7 @@ public sealed class PlayerMovement : Component, IAir
 
 		SceneTraceResult trace = Scene.Trace
 			.Ray( headPosition, headPosition + Vector3.Up * height )
-			.WithoutTags( "player" )
+			.WithoutTags( "player", "item" )
 			.Size( hull )
 			.Run();
 
@@ -184,7 +184,6 @@ public sealed class PlayerMovement : Component, IAir
 	{
 		OnAirEnter( trigger );
 
-		Vector3 position = Transform.Position;
 		GameObject.SetParent( parent, true );
 	}
 

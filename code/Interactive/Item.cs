@@ -45,6 +45,9 @@ public class Item : BaseInteractive, IAir
 
 	protected virtual void MoveInWater()
 	{
+		if ( CurrentItemState != ItemState.None )
+			return;
+		
 		if ( !inTheWater )
 			return;
 
@@ -55,8 +58,22 @@ public class Item : BaseInteractive, IAir
 
 	protected virtual void MakeItemForSlot(bool pleaseDontMake)
 	{
-		rigidbody.Gravity = pleaseDontMake;
+		rigidbody.Enabled = pleaseDontMake;
 		modelRenderer.Enabled = pleaseDontMake;
+	}
+
+	protected virtual void LockUnlockPhysics(bool _lock )
+	{
+		PhysicsLock physicsLock = rigidbody.Locking;
+		physicsLock.X = _lock;
+		physicsLock.Y = _lock;
+		physicsLock.Z = _lock;
+
+		physicsLock.Pitch = _lock;
+		physicsLock.Yaw = _lock;
+		physicsLock.Roll = _lock;
+
+		rigidbody.Locking = physicsLock;
 	}
 
 	public override void OnInteract( Guid playerId )
@@ -64,15 +81,55 @@ public class Item : BaseInteractive, IAir
 		if ( CurrentItemState != ItemState.None )
 			return;
 
-		GameObject playerObject = FindPlayer( playerId );
+		GameObject playerObject = FindObject( playerId );
 		PlayerInventory inventory = playerObject.Components.Get<PlayerInventory>();
 
 		if ( !inventory.CanTake() )
 			return;
-
-		OnTake( playerId );
-
+		
 		inventory.Take( this, GameObject );
+		
+		OnTake( playerId, inventory.inventoryStorage.Id );
+
+		Transform.LocalPosition = Vector3.Zero;
+		Transform.LocalRotation = Rotation.Identity;
+
+		rigidbody.Velocity = Vector3.Zero;
+		rigidbody.AngularVelocity = Vector3.Zero;
+	}
+
+	[Broadcast]
+	protected virtual void OnTake( Guid playerId, Guid inventoryId )
+	{
+		GameObject inventoryStorage = FindObject( inventoryId );
+
+		MakeItemForSlot( false );
+
+		IsInteractive = false;
+
+		LockUnlockPhysics( true );
+		GameObject.SetParent( inventoryStorage, false );
+	}
+
+	[Broadcast]
+	public virtual void Drop( Vector3 cameraPos, Vector3 forward, float throwPower )
+	{
+		if ( CurrentItemState == ItemState.None )
+			return;
+
+		CurrentItemState = ItemState.None;
+		IsInteractive = true;
+		GameObject.SetParent( objectToParent );
+
+		MakeItemForSlot( true );
+		LockUnlockPhysics( false );
+
+		Transform.Rotation = Rotation.Identity;
+
+		Transform.Position = cameraPos;
+		rigidbody.Velocity = forward * throwPower;
+
+		rigidbody.Gravity = !inTheWater;
 	}
 
 	[Broadcast]
@@ -80,7 +137,7 @@ public class Item : BaseInteractive, IAir
 	{
 		CurrentItemState = ItemState.Active;
 
-		OnActivate();
+		OnSlotActivate();
 	}
 
 	[Broadcast]
@@ -88,43 +145,12 @@ public class Item : BaseInteractive, IAir
 	{
 		CurrentItemState = ItemState.Inventory;
 
-		OnDeactivate();
+		OnSlotDeactivate();
 	}
 
-	protected virtual void OnActivate() { }
+	protected virtual void OnSlotActivate() { }
 
-	protected virtual void OnDeactivate() { }
-
-	[Broadcast]
-	protected virtual void OnTake(Guid playerId)
-	{
-		GameObject playerObject = FindPlayer( playerId );
-
-		MakeItemForSlot( false );
-
-		IsInteractive = false;
-		GameObject.SetParent( playerObject, false );
-	}
-
-	[Broadcast]
-	public virtual void Drop(Vector3 cameraPos, Vector3 forward, float throwPower)
-	{	
-		if ( CurrentItemState == ItemState.None )
-			return;
-
-		CurrentItemState = ItemState.None;
-		IsInteractive = true;
-
-		MakeItemForSlot( true );
-
-		Transform.Rotation = Rotation.Identity;
-
-		GameObject.SetParent( objectToParent );
-		Transform.Position = cameraPos;
-		rigidbody.Velocity = forward * throwPower;
-
-		rigidbody.Gravity = !inTheWater;
-	}
+	protected virtual void OnSlotDeactivate() { }
 
 	public void OnAirEnter( GameObject trigger )
 	{

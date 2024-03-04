@@ -7,8 +7,8 @@ public abstract class BaseInteractive : Component, IInteractive
 
 	public virtual void OnInteract( Guid userId ) { }
 
-	protected GameObject FindPlayer(Guid playerId )
+	protected GameObject FindObject( Guid objectId )
 	{
-		return Scene.Directory.FindByGuid( playerId );
+		return Scene.Directory.FindByGuid( objectId );
 	}
 }

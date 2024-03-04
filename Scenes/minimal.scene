@@ -157,53 +157,9 @@
       ]
     },
     {
-      "Id": "6e23f212-6b6c-4f61-a9c6-c8326de908cd",
-      "Name": "TestItem",
-      "Position": "-1805.735,-51.07482,454.163",
-      "Scale": "0.5,0.5,0.5",
-      "Tags": "item",
-      "Networked": true,
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "ModelRenderer",
-          "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
-          "Model": "models/dev/box.vmdl",
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "BoxCollider",
-          "Center": "0,0,0",
-          "IsTrigger": false,
-          "Scale": "50,50,50",
-          "Static": false,
-          "Surface": null
-        },
-        {
-          "__type": "Rigidbody",
-          "AngularDamping": 0,
-          "Gravity": true,
-          "LinearDamping": 0,
-          "Locking": {},
-          "MassOverride": 0,
-          "RigidbodyFlags": 0,
-          "StartAsleep": false
-        },
-        {
-          "__type": "Item",
-          "ImagePath": "/Textures/Items/iron.png",
-          "WaterFriction": 2,
-          "WaveHieght": 10
-        }
-      ]
-    },
-    {
       "Id": "f00d7b96-3a2b-44ca-8ac5-ad942c40cc75",
       "Name": "TestItem (1)",
-      "Position": "-1849.399,-51.07482,454.163",
+      "Position": "-1868.183,-51.07482,454.163",
       "Scale": "0.5,0.5,0.5",
       "Tags": "item",
       "Networked": true,
@@ -247,7 +203,7 @@
     {
       "Id": "f699af18-348f-4d72-83b5-afb9e81bcf03",
       "Name": "TestItem (2)",
-      "Position": "-1894.559,-51.07482,454.163",
+      "Position": "-1913.343,-51.07482,454.163",
       "Scale": "0.5,0.5,0.5",
       "Tags": "item",
       "Networked": true,
@@ -291,7 +247,7 @@
     {
       "Id": "da317234-8975-44a4-a220-da2d16e535e3",
       "Name": "TestItem (3)",
-      "Position": "-1941.684,-51.07482,454.163",
+      "Position": "-1960.468,-51.07482,454.163",
       "Scale": "0.5,0.5,0.5",
       "Tags": "item",
       "Networked": true,
@@ -349,6 +305,103 @@
           "Tint": "1,1,1,1"
         }
       ]
+    },
+    {
+      "Id": "e579d326-3ab3-42f3-9f33-8c5516d5842b",
+      "Name": "Cube",
+      "Position": "-1874.506,-57.32225,364.733",
+      "Scale": "4.648875,0.9841132,2",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        }
+      ]
+    },
+    {
+      "Id": "86db273f-23a7-4a58-b3cb-4f5b4844d24d",
+      "Name": "Flashlight",
+      "Position": "-1783.538,-71.35822,477.7578",
+      "Scale": "2,2,2",
+      "Tags": "item",
+      "Networked": true,
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Rigidbody",
+          "AngularDamping": 0,
+          "Gravity": true,
+          "LinearDamping": 0,
+          "Locking": {},
+          "MassOverride": 0,
+          "RigidbodyFlags": 0,
+          "StartAsleep": false
+        },
+        {
+          "__type": "ModelCollider",
+          "IsTrigger": false,
+          "Model": "models/crueltysquad/flashlight.vmdl",
+          "Static": false,
+          "Surface": null
+        },
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
+          "Model": "models/crueltysquad/flashlight.vmdl",
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "Flashlight",
+          "light": {
+            "_type": "gameobject",
+            "go": "33bff4a3-38c1-4376-89be-673744dcef73"
+          },
+          "ImagePath": "/Textures/Items/iron.png",
+          "WaterFriction": 2,
+          "WaveHieght": 10,
+          "WeaponName": "flashlight"
+        }
+      ],
+      "Children": [
+        {
+          "Id": "33bff4a3-38c1-4376-89be-673744dcef73",
+          "Name": "Spot Light",
+          "Position": "0,0,0",
+          "Tags": "light_spot,light",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "SpotLight",
+              "Attenuation": 1,
+              "ConeInner": 15,
+              "ConeOuter": 25.03,
+              "Cookie": null,
+              "FogMode": "Enabled",
+              "FogStrength": 1,
+              "LightColor": "0.91373,0.98039,1,1",
+              "Radius": 500,
+              "Shadows": true
+            }
+          ]
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -374,6 +427,8 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-03-03T00:47:07.2408241\u002B02:00",
-  "__references": []
+  "LastSaved": "2024-03-04T23:47:12.6990524\u002B02:00",
+  "__references": [
+    "greg.flashlightcs"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "1b918ab3-a2e7-40fe-84ad-47676c7439de",
+    "Id": "00accf5d-de50-41fc-a824-e8f0da9375bc",
     "Name": "player",
     "Tags": "player",
     "Enabled": true,
@@ -38,7 +38,7 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "d73bd75d-0556-4df5-a2a9-f65b7c078d0e",
+          "go": "45718350-c3c1-4548-91ce-953b2e38dd35",
           "component_type": "SkinnedModelRenderer"
         }
       },
@@ -59,7 +59,7 @@
         "__type": "PlayerManager",
         "PlayerHUD": {
           "_type": "gameobject",
-          "go": "5e2a5690-54c4-42f9-ab57-758db1d68713"
+          "go": "d1f6fc6e-fd60-4c1d-b3d2-1daafb4156ca"
         }
       },
       {
@@ -67,7 +67,7 @@
         "playerClothes": "[{\u0022id\u0022:1594058106},{\u0022id\u0022:1772984322},{\u0022id\u0022:-778804355},{\u0022id\u0022:-1205155907},{\u0022id\u0022:-279002814}]",
         "playerModelRenderer": {
           "_type": "component",
-          "go": "d73bd75d-0556-4df5-a2a9-f65b7c078d0e",
+          "go": "45718350-c3c1-4548-91ce-953b2e38dd35",
           "component_type": "SkinnedModelRenderer"
         }
       },
@@ -81,17 +81,17 @@
         "jumpForce": 250,
         "playerBody": {
           "_type": "gameobject",
-          "go": "d73bd75d-0556-4df5-a2a9-f65b7c078d0e"
+          "go": "45718350-c3c1-4548-91ce-953b2e38dd35"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "68dd10eb-1d37-4a1e-8c76-587880235c7a",
+          "go": "73ed9caf-be63-47ff-98dc-dbae66b3d841",
           "component_type": "CameraComponent"
         },
         "playerCrouchSpeed": 50,
         "playerHead": {
           "_type": "gameobject",
-          "go": "e74cd10e-3551-4845-9a56-658f460906a5"
+          "go": "5b2befa8-0aab-4537-b39d-6361aaf18a0d"
         },
         "playerRunSpeed": 250,
         "playerWalkSpeed": 150,
@@ -104,18 +104,18 @@
         "interactDistance": 75,
         "playerCamera": {
           "_type": "gameobject",
-          "go": "68dd10eb-1d37-4a1e-8c76-587880235c7a"
+          "go": "73ed9caf-be63-47ff-98dc-dbae66b3d841"
         }
       },
       {
         "__type": "PlayerInventory",
         "inventoryStorage": {
           "_type": "gameobject",
-          "go": "465d08e5-ae9e-45fc-9df0-f13ac5f75c3c"
+          "go": "e93498e0-de08-4a4d-a383-f637b2c437a0"
         },
         "playerCamera": {
           "_type": "component",
-          "go": "68dd10eb-1d37-4a1e-8c76-587880235c7a",
+          "go": "73ed9caf-be63-47ff-98dc-dbae66b3d841",
           "component_type": "CameraComponent"
         },
         "ThrowPower": 250
@@ -123,13 +123,13 @@
     ],
     "Children": [
       {
-        "Id": "e74cd10e-3551-4845-9a56-658f460906a5",
+        "Id": "5b2befa8-0aab-4537-b39d-6361aaf18a0d",
         "Name": "PlayerHead",
         "Position": "0,0,63",
         "Enabled": true,
         "Children": [
           {
-            "Id": "68dd10eb-1d37-4a1e-8c76-587880235c7a",
+            "Id": "73ed9caf-be63-47ff-98dc-dbae66b3d841",
             "Name": "Camera",
             "Position": "0,0,0",
             "Tags": "maincamera",
@@ -154,7 +154,7 @@
             ],
             "Children": [
               {
-                "Id": "465d08e5-ae9e-45fc-9df0-f13ac5f75c3c",
+                "Id": "e93498e0-de08-4a4d-a383-f637b2c437a0",
                 "Name": "Inventory",
                 "Position": "0,0,0",
                 "Enabled": true
@@ -164,7 +164,7 @@
         ]
       },
       {
-        "Id": "d73bd75d-0556-4df5-a2a9-f65b7c078d0e",
+        "Id": "45718350-c3c1-4548-91ce-953b2e38dd35",
         "Name": "PlayerBody",
         "Enabled": true,
         "Components": [
@@ -183,7 +183,7 @@
         ]
       },
       {
-        "Id": "5e2a5690-54c4-42f9-ab57-758db1d68713",
+        "Id": "d1f6fc6e-fd60-4c1d-b3d2-1daafb4156ca",
         "Name": "HUD",
         "Enabled": true,
         "Components": [
@@ -198,7 +198,7 @@
             "__type": "Inventory",
             "playerInventory": {
               "_type": "component",
-              "go": "1b918ab3-a2e7-40fe-84ad-47676c7439de",
+              "go": "00accf5d-de50-41fc-a824-e8f0da9375bc",
               "component_type": "PlayerInventory"
             }
           },
@@ -208,7 +208,7 @@
             "DefaultCrosshair": "Textures/UI/Crosshair.png",
             "playerInteract": {
               "_type": "component",
-              "go": "1b918ab3-a2e7-40fe-84ad-47676c7439de",
+              "go": "00accf5d-de50-41fc-a824-e8f0da9375bc",
               "component_type": "PlayerInteract"
             }
           }
