@@ -9,7 +9,7 @@
     <div class="horizontal-menu">
         <div class="team">
             <div class="team-name">Red Team</div>
-            
+
             <div class="players">
                 @foreach (Guid playerId in redPlayers)
                 {
@@ -23,7 +23,11 @@
                 }
             </div>
             
-            <button class="join-button">Join</button>
+            @if (lobbyManager.CurrentTeam != Team.Red && lobbyManager.CanJoinTeam( Team.Blue ))
+            {
+                <button class="join-button">Join</button>
+            }
+            
         </div>
 
         <div class="vs">
@@ -46,7 +50,13 @@
                 }
             </div>
 
-            <button class="join-button">Join</button>
+            @if (lobbyManager.CurrentTeam != Team.Blue && lobbyManager.CanJoinTeam(Team.Blue))
+            {
+                <div class="center-panel">
+                    <button>Join</button>
+                </div>
+                
+            }
         </div>
     </div>
 </root>
@@ -60,12 +70,15 @@
 
     public void UpdatePlayerList(NetList<Guid> redPlayers, NetList<Guid> bluePlayers)
     {
-        Log.Info("Hello World 2");
-
         this.redPlayers = redPlayers;
         this.bluePlayers = bluePlayers;
 
         StateHasChanged();
+    }
+
+    public void ChangeTeam(Team team)
+    {
+        
     }
 
     protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());

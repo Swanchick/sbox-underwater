@@ -1,4 +1,4 @@
-$menu-size: 256px;
+$menu-size: 300px;
 $team-width: 512px; 
 $player-size: 42px;
 $player-gap: 10px;
@@ -73,12 +73,38 @@ Lobby {
                 justify-content: center;
                 font-size: 48px;
             }
-
-            > .join-button {
-                width: 100%;
-                justify-content: center;
-                font-size: 32px;
-            }
         }
+    }
+
+    button {
+        width: 30%;
+        background-color: rgba(171, 171, 171);
+        border-radius: 5px;
+        border-width: 2px;
+        border-color: rgb(102, 102, 102);
+        color: rgb(23, 31, 27);
+        justify-content: center;
+        font-size: 32px;
+    }
+
+    button {
+        width: 30%;
+        background-color: rgba(171, 171, 171);
+        border-radius: 5px;
+        border-width: 2px;
+        border-color: rgb(102, 102, 102);
+        color: rgb(23, 31, 27);
+        justify-content: center;
+        font-size: 32px;
+
+        &:hover {
+            background-color: rgb(102, 102, 102);
+            cursor: pointer;
+        }
+    }
+
+    .center-panel {
+        width: 100%;
+        justify-content: center;
     }
 }

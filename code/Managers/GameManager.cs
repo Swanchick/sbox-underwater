@@ -36,7 +36,6 @@ public sealed class GameManager : Component, Component.INetworkListener
 	{
 		if ( IsRoundStarted )
 		{
-			// SpawnPlayer( channel, RedSpawnPoint );
 
 			return;
 		}
@@ -44,6 +43,9 @@ public sealed class GameManager : Component, Component.INetworkListener
 		GameObject lobbyClient = LobbyClientPrefab.Clone();
 		lobbyClient.Name = $"Lobby: {channel.DisplayName}";
 		lobbyClient.NetworkSpawn( channel );
+
+		LobbyManager lobbyManager = lobbyClient.Components.Get<LobbyManager>();
+		lobbyManager.GameManager = this;
 
 		AutoAssignTeam( lobbyClient );
 	}
@@ -67,6 +69,11 @@ public sealed class GameManager : Component, Component.INetworkListener
 		}
 
 		UpdatePlayerTeams( lobby.Id );
+	}
+
+	public void ChangeTeam(GameObject lobby, Team team)
+	{
+
 	}
 
 	[Broadcast]
