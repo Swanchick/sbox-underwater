@@ -1,7 +1,8 @@
 ﻿using Sandbox;
-using Sandbox.Menu;
 using Sandbox.Network;
+using Sandbox.Utility;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 [Title( "Game Manager" )]
@@ -9,11 +10,14 @@ using System.Threading.Tasks;
 [Icon( "electrical_services" )]
 public sealed class GameManager : Component, Component.INetworkListener
 {
+	[Property] public GameObject LobbyClientPrefab { get; set; }
 	[Property] public GameObject PlayerPrefab { get; set; }
 	[Property] public GameObject RedSpawnPoint { get; set; }
 
 	[Sync] public bool IsRoundStarted { get; set; } = false;
-	[Sync] public NetList<PlayerTeam> PlayersTeam { get; set; } = new();
+
+	[Sync] public NetList<Guid> playerRedTeam { get; set; } = new();
+	[Sync] public NetList<Guid> playerBlueTeam { get; set; } = new();
 
 	protected override async Task OnLoad()
 	{
@@ -30,17 +34,57 @@ public sealed class GameManager : Component, Component.INetworkListener
 
 	public void OnActive( Connection channel )
 	{
-		SpawnPlayer( channel, RedSpawnPoint );
+		if ( IsRoundStarted )
+		{
+			// SpawnPlayer( channel, RedSpawnPoint );
+
+			return;
+		}
+
+		GameObject lobbyClient = LobbyClientPrefab.Clone();
+		lobbyClient.Name = $"Lobby: {channel.DisplayName}";
+		lobbyClient.NetworkSpawn( channel );
+
+		AutoAssignTeam( lobbyClient );
+	}
+
+	private void AutoAssignTeam( GameObject lobby )
+	{
+		IAutoAssignTeam team = lobby.Components.Get<IAutoAssignTeam>();
+
+		if ( team is null )
+			return;
+
+		if ( playerRedTeam.Count == playerBlueTeam.Count || playerRedTeam.Count < playerBlueTeam.Count )
+		{
+			playerRedTeam.Add( lobby.Id );
+			team.CurrentTeam = Team.Red;
+		}
+		else
+		{
+			playerBlueTeam.Add( lobby.Id );
+			team.CurrentTeam = Team.Blue;
+		}
+
+		UpdatePlayerTeams( lobby.Id );
+	}
+
+	[Broadcast]
+	private void UpdatePlayerTeams(Guid lobbyId)
+	{
+		GameObject lobby = Scene.Directory.FindByGuid( lobbyId );
+
+		IAutoAssignTeam team = lobby.Components.Get<IAutoAssignTeam>();
+		Log.Info( team );
+
+		if ( team is null )
+			return;
+
+		team.OnTeamChanged( playerRedTeam, playerBlueTeam );
 	}
 
 	private void OnDisconnected( Connection channel )
 	{
-
-	}
-
-	private void SpawnPlayer( Connection channel, GameObject spawnPoint )
-	{
-		GameObject player = PlayerPrefab.Clone( spawnPoint.Transform.World, name: channel.DisplayName );
-		player.NetworkSpawn( channel );
+		
 	}
 }

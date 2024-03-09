@@ -1,0 +1,79 @@
+{
+  "RootObject": {
+    "Id": "9fa10820-396d-40e6-a192-f42be9ee1a0c",
+    "Name": "lobbyclient",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "LobbyManager",
+        "lobby": {
+          "_type": "component",
+          "go": "7e4baeb0-7fe1-462f-a495-628b765ae4ee",
+          "component_type": "Lobby"
+        },
+        "LobbyCamera": {
+          "_type": "component",
+          "go": "702eee8b-dc06-4b5d-83f5-c374ad9f1e4c",
+          "component_type": "CameraComponent"
+        },
+        "Menu": {
+          "_type": "gameobject",
+          "go": "7e4baeb0-7fe1-462f-a495-628b765ae4ee"
+        }
+      }
+    ],
+    "Children": [
+      {
+        "Id": "702eee8b-dc06-4b5d-83f5-c374ad9f1e4c",
+        "Name": "Camera",
+        "Position": "0,0,200",
+        "Tags": "maincamera",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "CameraComponent",
+            "BackgroundColor": "0.33333,0.46275,0.52157,1",
+            "ClearFlags": "All",
+            "FieldOfView": 60,
+            "IsMainCamera": true,
+            "Orthographic": false,
+            "OrthographicHeight": 1204,
+            "Priority": 1,
+            "RenderExcludeTags": "",
+            "RenderTags": "",
+            "TargetEye": "None",
+            "Viewport": "0,0,1,1",
+            "ZFar": 10000,
+            "ZNear": 10
+          }
+        ]
+      },
+      {
+        "Id": "7e4baeb0-7fe1-462f-a495-628b765ae4ee",
+        "Name": "Menu",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "ScreenPanel",
+            "AutoScreenScale": true,
+            "Opacity": 1,
+            "Scale": 1,
+            "ZIndex": 100
+          },
+          {
+            "__type": "Lobby",
+            "lobbyManager": {
+              "_type": "component",
+              "go": "9fa10820-396d-40e6-a192-f42be9ee1a0c",
+              "component_type": "LobbyManager"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": []
+}

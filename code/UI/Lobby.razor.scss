@@ -58,6 +58,8 @@ Lobby {
                     width: 96%;
                     background-color: rgba(171, 171, 171);
                     border-radius: 5px;
+                    border-width: 2px;
+                    border-color: rgb(102, 102, 102);
                     padding-left: 10px;
                     height: $player-size;
                     font-size: 32px;

@@ -1,5 +1,6 @@
 @using Sandbox;
 @using Sandbox.UI;
+@using System;
 @inherits PanelComponent;
 
 <root>
@@ -10,7 +11,16 @@
             <div class="team-name">Red Team</div>
             
             <div class="players">
-                <div class="player">Swanchick</div>
+                @foreach (Guid playerId in redPlayers)
+                {
+                    GameObject player = Scene.Directory.FindByGuid(playerId);
+                    
+                    if (player is not null)
+                    {
+                        Connection client = player.Network.OwnerConnection;
+                        <div class="player">@client.DisplayName</div>
+                    }
+                }
             </div>
             
             <button class="join-button">Join</button>
@@ -24,9 +34,15 @@
             <div class="team-name">Blue Team</div>
 
             <div class="players">
-                @for (int i = 0; i < 2; i++)
+                @foreach (Guid playerId in bluePlayers )
                 {
-                    <div class="player">Swanchick</div>
+                    GameObject player = Scene.Directory.FindByGuid(playerId);
+                    
+                    if (player is not null)
+                    {
+                        Connection client = player.Network.OwnerConnection;
+                        <div class="player">@client.DisplayName</div>
+                    }
                 }
             </div>
 
@@ -37,5 +53,20 @@
 
 @code 
 {
-    
+    [Property] public LobbyManager lobbyManager;
+
+    private NetList<Guid> redPlayers = new();
+    private NetList<Guid> bluePlayers = new();
+
+    public void UpdatePlayerList(NetList<Guid> redPlayers, NetList<Guid> bluePlayers)
+    {
+        Log.Info("Hello World 2");
+
+        this.redPlayers = redPlayers;
+        this.bluePlayers = bluePlayers;
+
+        StateHasChanged();
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());
 }
