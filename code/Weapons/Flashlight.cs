@@ -4,17 +4,13 @@ public class Flashlight : BaseWeapon
 {
 	[Property] public GameObject light;
 
-	protected override void OnSlotDeactivate()
-	{
-		if ( IsProxy )
-			return;
-
-		light.Enabled = false;
-	}
+	private bool flashLightWorks = false;
 
 	public override void PrimaryFire()
 	{
-		light.Enabled = !light.Enabled;
+		flashLightWorks = !flashLightWorks;
+
+		light.Enabled = flashLightWorks;
 
 		Log.Info( "Shoot!" );
 	}

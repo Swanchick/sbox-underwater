@@ -16,12 +16,12 @@ public class Item : BaseInteractive, IAir
 	[Property] public float WaveHieght { get; set; } = 10f;
 
 	public int CurrentSlot { get; set; }
-
 	public ItemState CurrentItemState { get; private set; } = ItemState.None;
 
-	[Sync] public bool inTheWater { get; set; } = false;
+	public GameObject Owner { get; protected set; }
 
 	public List<GameObject> AirTrigger { get; set; } = new();
+	[Sync] public bool InTheWater { get; set; } = false;
 
 	private GameObject objectToParent;
 	
@@ -48,10 +48,10 @@ public class Item : BaseInteractive, IAir
 		if ( CurrentItemState != ItemState.None )
 			return;
 		
-		if ( !inTheWater )
+		if ( !InTheWater )
 			return;
 
-		rigidbody.Gravity = !inTheWater;
+		rigidbody.Gravity = !InTheWater;
 
 		rigidbody.Velocity = Vector3.Lerp( rigidbody.Velocity, Vector3.Zero, Time.Delta * WaterFriction );
 		rigidbody.Velocity = rigidbody.Velocity.WithZ(rigidbody.Velocity.z + (float)Math.Sin( Time.Now ) * WaveHieght * Time.Delta);
@@ -89,14 +89,18 @@ public class Item : BaseInteractive, IAir
 	[Broadcast]
 	protected virtual void OnTake( Guid playerId, Guid inventoryId )
 	{
+		GameObject player = FindObject( playerId );
+		Owner = player;
+
 		GameObject inventoryStorage = FindObject( inventoryId );
 		MakeItemForSlot( false );
 
 		IsInteractive = false;
 
 		CurrentItemState = ItemState.Inventory;
-
 		GameObject.SetParent( inventoryStorage, false );
+
+		
 	}
 
 	[Broadcast]
@@ -116,6 +120,11 @@ public class Item : BaseInteractive, IAir
 		Transform.Rotation = Rotation.Identity;
 		Transform.Position = cameraPos;
 		rigidbody.Velocity = forward * throwPower;
+
+		PlayerMovement playerMovement = Owner.Components.Get<PlayerMovement>();
+		InTheWater = playerMovement.InTheWater;
+
+		Owner = null;
 	}
 
 	[Broadcast]
@@ -145,7 +154,7 @@ public class Item : BaseInteractive, IAir
 
 		AirTrigger.Add( trigger );
 
-		inTheWater = false;
+		InTheWater = false;
 
 		if ( CurrentItemState != ItemState.None )
 			return;
@@ -180,7 +189,7 @@ public class Item : BaseInteractive, IAir
 		if ( AirTrigger.Count != 0 )
 			return;
 
-		inTheWater = true;
+		InTheWater = true;
 
 		if ( CurrentItemState != ItemState.None )
 			return;

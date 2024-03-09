@@ -43,6 +43,7 @@ public sealed class PlayerMovement : Component, IAir
 	private float defaultPlayerHeight;
 
 	public List<GameObject> AirTrigger { get; private set; } = new();
+	public bool InTheWater { get; set; } = true;
 
 	[Sync] public Rotation bodyRotation { get; set; }
 	[Sync] public Vector3 wishDir { get; set; }
@@ -178,6 +179,8 @@ public sealed class PlayerMovement : Component, IAir
 		AirTrigger.Add( trigger );
 
 		playerStates = PlayerStates.Walk;
+
+		InTheWater = false;
 	}
 
 	public void OnAirEnterWithParent( GameObject trigger, GameObject parent )
@@ -200,6 +203,8 @@ public sealed class PlayerMovement : Component, IAir
 		GameObject.SetParent( Scene, true );
 
 		playerStates = PlayerStates.Swim;
+
+		InTheWater = true;
 	}
 
 	// Building velocity from player input

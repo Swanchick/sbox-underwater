@@ -2,14 +2,15 @@
 
 public class Pistol : BaseWeapon
 {
-	[Property] public GameObject ViewModel;
+	[Property] public SkinnedModelRenderer ViewModel;
+	
 
 	protected override void OnSlotActivate()
 	{
 		if ( IsProxy )
 			return;
 
-		ViewModel.Enabled = true;
+		ViewModel.GameObject.Enabled = true;
 	}
 
 	protected override void OnSlotDeactivate()
@@ -17,6 +18,14 @@ public class Pistol : BaseWeapon
 		if ( IsProxy )
 			return;
 
-		ViewModel.Enabled = false;
+		ViewModel.GameObject.Enabled = false;
+
+		
+	}
+
+	public override void PrimaryFire()
+	{
+		Log.Info( "Shoot!" );
+		ViewModel.Set( "1H_Fire_01", true );
 	}
 }
