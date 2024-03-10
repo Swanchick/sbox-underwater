@@ -22,13 +22,16 @@
                     }
                 }
             </div>
- 
-            @if (lobbyManager.CanJoinTeam(Team.Red))
+            @if (lobbyManager is not null)
             {
-                <div class="center-panel">
-                    <button onclick=@(() => lobbyManager.ChangeTeam(Team.Red))>Join</button>
-                </div>
+                @if (lobbyManager.CanJoinTeam(Team.Red))
+                {
+                    <div class="center-panel">
+                        <button onclick=@(() => lobbyManager.ChangeTeam(Team.Red))>Join</button>
+                    </div>
+                }
             }
+            
         </div>
 
         <div class="vs">
@@ -51,25 +54,45 @@
                 }
             </div>
             
-            @if (lobbyManager.CanJoinTeam(Team.Blue))
+            @if (lobbyManager is not null)
             {
-                <div class="center-panel">
-                    <button onclick=@(() => lobbyManager.ChangeTeam(Team.Blue))>Join</button>
-                </div>
+                @if (lobbyManager.CanJoinTeam(Team.Blue))
+                {
+                    <div class="center-panel">
+                        <button onclick=@(() => lobbyManager.ChangeTeam(Team.Blue))>Join</button>
+                    </div>
+                }
             }
-            
         </div>
+    </div>
+
+    <div class="terminal-panel">
+        <div class="lines">
+            @foreach (Entry entry in entries)
+            {
+                <div class="message"><div class="author">@($"{entry.Author}: ")</div>@entry.Message</div>
+            }
+        </div>
+
+        <TextEntry @ref="InputBox" onsubmit=@(() => SendMessage())>
+
+        </TextEntry>
     </div>
 </root>
 
 @code 
 {
     [Property] public GameObject lobbyObject;
-
     private LobbyManager lobbyManager;
 
     private NetList<Guid> redPlayers = new();
     private NetList<Guid> bluePlayers = new();
+
+    private TextEntry InputBox;
+
+    [Sync] public NetList<Entry> entries { get; set; } = new();
+
+    private int maxEntries = 11;
 
     protected override void OnStart()
     {
@@ -80,6 +103,22 @@
     {
         this.redPlayers = redPlayers;
         this.bluePlayers = bluePlayers;
+
+        StateHasChanged();
+    }
+
+    public void SendMessage()
+    {
+        string text = InputBox.Text;
+        InputBox.Text = "";
+
+        lobbyManager.SendAll(text);
+    }
+
+    public void AddText(string author, string message)
+    {
+        Entry entry = new Entry(author, message);
+        entries.Add(entry);
 
         StateHasChanged();
     }

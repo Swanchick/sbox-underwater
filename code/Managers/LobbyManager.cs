@@ -1,8 +1,18 @@
 ﻿using Sandbox;
 using Sandbox.Network;
 using System;
-using System.Collections;
-using System.IO;
+
+public struct Entry
+{
+	public string Author;
+	public string Message;
+
+	public Entry (string author, string message)
+	{
+		Author = author;
+		Message = message;
+	}
+}
 
 public sealed class LobbyManager : Component, IAutoAssignTeam
 {
@@ -41,7 +51,7 @@ public sealed class LobbyManager : Component, IAutoAssignTeam
 		teams.Add( Team.Red, redPlayers );
 		teams.Add( Team.Blue, bluePlayers );
 
-		return teams[CurrentTeam].Count >= teams[team].Count && CurrentTeam != team;
+		return teams[CurrentTeam].Count > teams[team].Count && CurrentTeam != team;
 	}
 
 	public void ChangeTeam(Team team)
@@ -56,5 +66,10 @@ public sealed class LobbyManager : Component, IAutoAssignTeam
 	public void OnTeamChanged( NetList<Guid> redPlayers, NetList<Guid> bluePlayers )
 	{
 		lobby.UpdatePlayerList(redPlayers, bluePlayers);
+	}
+
+	public void SendAll(string message)
+	{
+		gameManager.SendAllFuckingMessage(message);
 	}
 }

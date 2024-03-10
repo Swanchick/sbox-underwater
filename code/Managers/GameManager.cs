@@ -16,6 +16,7 @@ public sealed class GameManager : Component, Component.INetworkListener
 
 	[Sync] public bool IsRoundStarted { get; set; } = false;
 
+	[Sync] public NetList<Guid> allPlayers { get; set; } = new();
 	[Sync] public NetList<Guid> playerRedTeam { get; set; } = new();
 	[Sync] public NetList<Guid> playerBlueTeam { get; set; } = new();
 
@@ -44,8 +45,10 @@ public sealed class GameManager : Component, Component.INetworkListener
 		lobbyClient.Name = $"Lobby: {channel.DisplayName}";
 		lobbyClient.NetworkSpawn( channel );
 
+
 		LobbyManager lobbyManager = lobbyClient.Components.Get<LobbyManager>();
 
+		allPlayers.Add( lobbyClient.Id );
 		SetGameManager( lobbyClient.Id );
 		AutoAssignTeam( lobbyClient.Id );
 
@@ -107,14 +110,26 @@ public sealed class GameManager : Component, Component.INetworkListener
 	private void UpdatePlayerTeams(Guid lobbyId)
 	{
 		GameObject lobby = Scene.Directory.FindByGuid( lobbyId );
-
 		IAutoAssignTeam team = lobby.Components.Get<IAutoAssignTeam>();
-		Log.Info( team );
 
 		if ( team is null )
 			return;
 
 		team.OnTeamChanged( playerRedTeam, playerBlueTeam );
+	}
+
+	[Broadcast]
+	public void SendAllFuckingMessage(string text)
+	{
+		string author = Rpc.Caller.DisplayName;
+
+		foreach (Guid lobbyId in allPlayers)
+		{
+			GameObject lobby = Scene.Directory.FindByGuid( lobbyId );
+			LobbyManager lobbyManager = lobby.Components.Get<LobbyManager>();
+
+			lobbyManager.lobby.AddText( author, text );
+		}
 	}
 
 	private void OnDisconnected( Connection channel )

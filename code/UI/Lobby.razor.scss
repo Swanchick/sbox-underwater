@@ -3,6 +3,7 @@ $team-width: 512px;
 $player-size: 42px;
 $player-gap: 10px;
 $team-gap: 100px;
+$menu-gap: 20px;
 
 Lobby {
     position: absolute;
@@ -12,6 +13,9 @@ Lobby {
     height: 100%;
     pointer-events: all;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: $menu-gap;
 
     .logo {
         width: 100%;
@@ -23,7 +27,6 @@ Lobby {
 
     .horizontal-menu {
         flex-direction: row;
-        top: 10%;
         height: $menu-size;
         width: 100%;
         justify-content: center;
@@ -76,15 +79,45 @@ Lobby {
         }
     }
 
-    button {
-        width: 30%;
-        background-color: rgba(171, 171, 171);
-        border-radius: 5px;
-        border-width: 2px;
-        border-color: rgb(102, 102, 102);
-        color: rgb(23, 31, 27);
-        justify-content: center;
-        font-size: 32px;
+    .terminal-panel {
+        width: 60%;
+        height: 400px;
+        flex-direction: column;
+        gap: 10px;
+
+        > .lines {
+            flex-grow: 1;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background-color: rgba(41, 55, 49, 0.7);
+            border-color: rgb(23, 31, 27, 0.5);
+            border-width: 3px;
+            justify-content: flex-end;
+            gap: 5px;
+            padding: 5px;
+
+            > .message {
+                color: white;
+                height: 24px;
+                font-size: 24px;
+
+                > .author {
+                    color: rgb(115, 255, 185);
+                }
+            }
+        }
+
+        > TextEntry {
+            border-radius: 10px;
+            background-color: rgba(41, 55, 49, 0.7);
+            border-color: rgb(23, 31, 27, 0.5);
+            border-width: 3px;
+            color: white;
+            height: 64px;
+            font-size: 24px;
+        }
     }
 
     button {
