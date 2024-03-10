@@ -22,12 +22,13 @@
                     }
                 }
             </div>
-            
-            @if (lobbyManager.CurrentTeam != Team.Red && lobbyManager.CanJoinTeam( Team.Blue ))
+ 
+            @if (lobbyManager.CanJoinTeam(Team.Red))
             {
-                <button class="join-button">Join</button>
+                <div class="center-panel">
+                    <button onclick=@(() => lobbyManager.ChangeTeam(Team.Red))>Join</button>
+                </div>
             }
-            
         </div>
 
         <div class="vs">
@@ -49,24 +50,31 @@
                     }
                 }
             </div>
-
-            @if (lobbyManager.CurrentTeam != Team.Blue && lobbyManager.CanJoinTeam(Team.Blue))
+            
+            @if (lobbyManager.CanJoinTeam(Team.Blue))
             {
                 <div class="center-panel">
-                    <button>Join</button>
+                    <button onclick=@(() => lobbyManager.ChangeTeam(Team.Blue))>Join</button>
                 </div>
-                
             }
+            
         </div>
     </div>
 </root>
 
 @code 
 {
-    [Property] public LobbyManager lobbyManager;
+    [Property] public GameObject lobbyObject;
+
+    private LobbyManager lobbyManager;
 
     private NetList<Guid> redPlayers = new();
     private NetList<Guid> bluePlayers = new();
+
+    protected override void OnStart()
+    {
+        lobbyManager = lobbyObject.Components.Get<LobbyManager>();
+    }
 
     public void UpdatePlayerList(NetList<Guid> redPlayers, NetList<Guid> bluePlayers)
     {
@@ -74,11 +82,6 @@
         this.bluePlayers = bluePlayers;
 
         StateHasChanged();
-    }
-
-    public void ChangeTeam(Team team)
-    {
-        
     }
 
     protected override int BuildHash() => System.HashCode.Combine(RealTime.Now.CeilToInt());

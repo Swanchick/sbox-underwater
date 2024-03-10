@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "9fa10820-396d-40e6-a192-f42be9ee1a0c",
+    "Id": "00e5a6d0-a833-49fa-9185-28b9eb7ef389",
     "Name": "lobbyclient",
     "Enabled": true,
     "Components": [
@@ -8,23 +8,23 @@
         "__type": "LobbyManager",
         "lobby": {
           "_type": "component",
-          "go": "7e4baeb0-7fe1-462f-a495-628b765ae4ee",
+          "go": "709a7787-b86a-49cd-aa83-7ec0533d3b12",
           "component_type": "Lobby"
         },
         "LobbyCamera": {
           "_type": "component",
-          "go": "702eee8b-dc06-4b5d-83f5-c374ad9f1e4c",
+          "go": "4d51d6b2-c748-49d3-a831-2e9a491879f5",
           "component_type": "CameraComponent"
         },
         "Menu": {
           "_type": "gameobject",
-          "go": "7e4baeb0-7fe1-462f-a495-628b765ae4ee"
+          "go": "709a7787-b86a-49cd-aa83-7ec0533d3b12"
         }
       }
     ],
     "Children": [
       {
-        "Id": "702eee8b-dc06-4b5d-83f5-c374ad9f1e4c",
+        "Id": "4d51d6b2-c748-49d3-a831-2e9a491879f5",
         "Name": "Camera",
         "Position": "0,0,200",
         "Tags": "maincamera",
@@ -49,7 +49,7 @@
         ]
       },
       {
-        "Id": "7e4baeb0-7fe1-462f-a495-628b765ae4ee",
+        "Id": "709a7787-b86a-49cd-aa83-7ec0533d3b12",
         "Name": "Menu",
         "Enabled": true,
         "Components": [
@@ -62,10 +62,9 @@
           },
           {
             "__type": "Lobby",
-            "lobbyManager": {
-              "_type": "component",
-              "go": "9fa10820-396d-40e6-a192-f42be9ee1a0c",
-              "component_type": "LobbyManager"
+            "lobbyObject": {
+              "_type": "gameobject",
+              "go": "00e5a6d0-a833-49fa-9185-28b9eb7ef389"
             }
           }
         ]

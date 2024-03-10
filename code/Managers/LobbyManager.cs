@@ -1,6 +1,8 @@
 ﻿using Sandbox;
 using Sandbox.Network;
 using System;
+using System.Collections;
+using System.IO;
 
 public sealed class LobbyManager : Component, IAutoAssignTeam
 {
@@ -11,7 +13,7 @@ public sealed class LobbyManager : Component, IAutoAssignTeam
 
 	[Property] public Lobby lobby;
 
-	public GameManager GameManager { get; set; }
+	private GameManager gameManager;
 
 	protected override void OnStart()
 	{
@@ -25,21 +27,30 @@ public sealed class LobbyManager : Component, IAutoAssignTeam
 		}
 	}
 
+	public void SetManager( GameManager manager )
+	{
+		gameManager = manager;
+	}
+
 	public bool CanJoinTeam( Team team )
 	{
-		NetList<Guid> redPlayers = GameManager.playerRedTeam;
-		NetList<Guid> bluePlayers = GameManager.playerBlueTeam;
+		NetList<Guid> redPlayers = gameManager.playerRedTeam;
+		NetList<Guid> bluePlayers = gameManager.playerBlueTeam;
 
 		Dictionary<Team, NetList<Guid>> teams = new();
-		teams.Add( CurrentTeam, redPlayers );
-		teams.Add( team, bluePlayers );
+		teams.Add( Team.Red, redPlayers );
+		teams.Add( Team.Blue, bluePlayers );
 
-		return teams[CurrentTeam].Count >= teams[team].Count;
+		return teams[CurrentTeam].Count >= teams[team].Count && CurrentTeam != team;
 	}
 
 	public void ChangeTeam(Team team)
 	{
+		if ( !CanJoinTeam( team ) )
+			return;
 
+		gameManager.ChangeTeam( GameObject.Id, CurrentTeam, team );
+		CurrentTeam = team;
 	}
 
 	public void OnTeamChanged( NetList<Guid> redPlayers, NetList<Guid> bluePlayers )

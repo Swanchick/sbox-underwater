@@ -45,13 +45,26 @@ public sealed class GameManager : Component, Component.INetworkListener
 		lobbyClient.NetworkSpawn( channel );
 
 		LobbyManager lobbyManager = lobbyClient.Components.Get<LobbyManager>();
-		lobbyManager.GameManager = this;
 
-		AutoAssignTeam( lobbyClient );
+		SetGameManager( lobbyClient.Id );
+		AutoAssignTeam( lobbyClient.Id );
+
 	}
 
-	private void AutoAssignTeam( GameObject lobby )
+	[Broadcast]
+	private void SetGameManager(Guid lobbyId)
 	{
+		GameObject lobby = Scene.Directory.FindByGuid( lobbyId );
+		LobbyManager lobbyManager = lobby.Components.Get<LobbyManager>();
+
+		lobbyManager.SetManager( this );
+	}
+
+	[Broadcast]
+	private void AutoAssignTeam( Guid lobbyId )
+	{
+		GameObject lobby = Scene.Directory.FindByGuid( lobbyId );
+
 		IAutoAssignTeam team = lobby.Components.Get<IAutoAssignTeam>();
 
 		if ( team is null )
@@ -68,12 +81,26 @@ public sealed class GameManager : Component, Component.INetworkListener
 			team.CurrentTeam = Team.Blue;
 		}
 
-		UpdatePlayerTeams( lobby.Id );
+		UpdatePlayerTeams( lobbyId );
 	}
 
-	public void ChangeTeam(GameObject lobby, Team team)
+	[Broadcast]
+	public void ChangeTeam(Guid lobbyId, Team oldTeam, Team newTeam)
 	{
+		if ( !Networking.IsHost )
+			return;
 
+		Dictionary<Team, NetList<Guid>> teams = new();
+		teams.Add( Team.Red, playerRedTeam );
+		teams.Add( Team.Blue, playerBlueTeam );
+
+		teams[oldTeam].Remove( lobbyId );
+		teams[newTeam].Add( lobbyId );
+
+		playerRedTeam = teams[Team.Red];
+		playerBlueTeam = teams[Team.Blue];
+
+		UpdatePlayerTeams( lobbyId );
 	}
 
 	[Broadcast]

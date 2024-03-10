@@ -17,7 +17,6 @@
         {
           "__type": "ModelRenderer",
           "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
           "MaterialOverride": "materials/tool_water.vmat",
           "Model": "models/dev/plane.vmdl",
           "RenderType": "On",
@@ -87,8 +86,6 @@
         {
           "__type": "MapInstance",
           "MapName": "testmap",
-          "OnMapLoaded": null,
-          "OnMapUnloaded": null,
           "UseMapFromLaunch": false
         }
       ],
@@ -105,13 +102,11 @@
           "Center": "0,0,125",
           "IsTrigger": true,
           "Scale": "500,500,250",
-          "Static": false,
-          "Surface": null
+          "Static": false
         },
         {
           "__type": "AirTrigger",
-          "canParent": false,
-          "toParent": null
+          "canParent": false
         }
       ]
     },
@@ -126,13 +121,11 @@
           "Center": "0,0,125",
           "IsTrigger": true,
           "Scale": "500,500,250",
-          "Static": false,
-          "Surface": null
+          "Static": false
         },
         {
           "__type": "AirTrigger",
-          "canParent": false,
-          "toParent": null
+          "canParent": false
         }
       ]
     },
@@ -147,13 +140,11 @@
           "Center": "0,0,125",
           "IsTrigger": true,
           "Scale": "500,500,250",
-          "Static": false,
-          "Surface": null
+          "Static": false
         },
         {
           "__type": "AirTrigger",
-          "canParent": false,
-          "toParent": null
+          "canParent": false
         }
       ]
     },
@@ -169,13 +160,11 @@
           "Center": "0,0,125",
           "IsTrigger": true,
           "Scale": "500,500,250",
-          "Static": false,
-          "Surface": null
+          "Static": false
         },
         {
           "__type": "AirTrigger",
-          "canParent": false,
-          "toParent": null
+          "canParent": false
         }
       ]
     },
@@ -191,8 +180,6 @@
         {
           "__type": "ModelRenderer",
           "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
           "Model": "models/dev/box.vmdl",
           "RenderType": "On",
           "Tint": "1,1,1,1"
@@ -202,8 +189,7 @@
           "Center": "0,0,0",
           "IsTrigger": false,
           "Scale": "50,50,50",
-          "Static": false,
-          "Surface": null
+          "Static": false
         },
         {
           "__type": "Rigidbody",
@@ -235,8 +221,6 @@
         {
           "__type": "ModelRenderer",
           "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
           "Model": "models/dev/box.vmdl",
           "RenderType": "On",
           "Tint": "1,1,1,1"
@@ -246,8 +230,7 @@
           "Center": "0,0,0",
           "IsTrigger": false,
           "Scale": "50,50,50",
-          "Static": false,
-          "Surface": null
+          "Static": false
         },
         {
           "__type": "Rigidbody",
@@ -279,8 +262,6 @@
         {
           "__type": "ModelRenderer",
           "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
           "Model": "models/dev/box.vmdl",
           "RenderType": "On",
           "Tint": "1,1,1,1"
@@ -290,8 +271,7 @@
           "Center": "0,0,0",
           "IsTrigger": false,
           "Scale": "50,50,50",
-          "Static": false,
-          "Surface": null
+          "Static": false
         },
         {
           "__type": "Rigidbody",
@@ -321,8 +301,6 @@
         {
           "__type": "ModelRenderer",
           "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
           "Model": "models/dev/box.vmdl",
           "RenderType": "On",
           "Tint": "1,1,1,1"
@@ -339,8 +317,6 @@
         {
           "__type": "ModelRenderer",
           "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
           "Model": "models/dev/box.vmdl",
           "RenderType": "On",
           "Tint": "1,1,1,1"
@@ -350,8 +326,7 @@
           "Center": "0,0,0",
           "IsTrigger": false,
           "Scale": "50,50,50",
-          "Static": false,
-          "Surface": null
+          "Static": false
         }
       ]
     },
@@ -378,14 +353,11 @@
           "__type": "ModelCollider",
           "IsTrigger": false,
           "Model": "models/crueltysquad/flashlight.vmdl",
-          "Static": false,
-          "Surface": null
+          "Static": false
         },
         {
           "__type": "ModelRenderer",
           "BodyGroups": 18446744073709551615,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
           "Model": "models/crueltysquad/flashlight.vmdl",
           "RenderType": "On",
           "Tint": "1,1,1,1"
@@ -415,7 +387,6 @@
               "Attenuation": 1,
               "ConeInner": 15,
               "ConeOuter": 25.03,
-              "Cookie": null,
               "FogMode": "Enabled",
               "FogStrength": 1,
               "LightColor": "0.91373,0.98039,1,1",
@@ -437,14 +408,11 @@
           "__type": "ModelCollider",
           "IsTrigger": false,
           "Model": "models/weapons/sbox_pistol_usp/w_usp.vmdl",
-          "Static": false,
-          "Surface": null
+          "Static": false
         },
         {
           "__type": "ModelRenderer",
           "BodyGroups": 9493,
-          "MaterialGroup": null,
-          "MaterialOverride": null,
           "Model": "models/weapons/sbox_pistol_usp/w_usp.vmdl",
           "RenderType": "On",
           "Tint": "1,1,1,1"
@@ -483,10 +451,7 @@
               "__type": "SkinnedModelRenderer",
               "AnimationGraph": "models/weapons/sbox_pistol_usp/v_usp.vanmgrph",
               "BodyGroups": 17685,
-              "BoneMergeTarget": null,
               "CreateBoneObjects": false,
-              "MaterialGroup": null,
-              "MaterialOverride": null,
               "Model": "models/weapons/sbox_pistol_usp/v_usp.vmdl",
               "RenderType": "Off",
               "Tint": "1,1,1,1"
@@ -519,7 +484,7 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-03-09T22:40:58.6286161\u002B02:00",
+  "LastSaved": "2024-03-10T15:02:07.6456403\u002B02:00",
   "__references": [
     "facepunch.v_usp",
     "facepunch.w_usp",
