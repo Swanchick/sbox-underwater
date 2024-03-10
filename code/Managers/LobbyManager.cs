@@ -70,6 +70,8 @@ public sealed class LobbyManager : Component, IAutoAssignTeam
 
 	public void SendAll(string message)
 	{
-		gameManager.SendAllFuckingMessage(message);
+		string author = Network.OwnerConnection.DisplayName;
+
+		gameManager.SendAllFuckingMessage( author, message );
 	}
 }

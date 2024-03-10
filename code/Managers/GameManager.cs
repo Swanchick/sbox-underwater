@@ -103,6 +103,9 @@ public sealed class GameManager : Component, Component.INetworkListener
 		playerRedTeam = teams[Team.Red];
 		playerBlueTeam = teams[Team.Blue];
 
+		GameObject lobby = Scene.Directory.FindByGuid( lobbyId );
+		SendAllFuckingMessage( "System", $"{lobby.Network.OwnerConnection.DisplayName} has changed team to {newTeam}." );
+
 		UpdatePlayerTeams( lobbyId );
 	}
 
@@ -119,10 +122,8 @@ public sealed class GameManager : Component, Component.INetworkListener
 	}
 
 	[Broadcast]
-	public void SendAllFuckingMessage(string text)
+	public void SendAllFuckingMessage(string author, string text)
 	{
-		string author = Rpc.Caller.DisplayName;
-
 		foreach (Guid lobbyId in allPlayers)
 		{
 			GameObject lobby = Scene.Directory.FindByGuid( lobbyId );
